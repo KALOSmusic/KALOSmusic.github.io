@@ -2,7 +2,7 @@ const works = [
   {
     title: "Lorna — Insatiable",
     genre: "Funk / Afrobeat",
-    cover: "assets/lorna-insatiable.jpg",
+    cover: "lorna-insatiable.jpg",
     concept: `
       <p><strong>Lorna</strong> is a fictional singer: young, beautiful, Black, charismatic, sensual, outspoken and fierce.</p>
       <p><em>Insatiable</em> explores her everyday life, her way of thinking and the experiences that shape her world, through a collection of funk and afrobeat songs.</p>
