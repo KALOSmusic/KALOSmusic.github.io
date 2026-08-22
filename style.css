@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400&family=Manrope:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #000;
+  --text: #d0d0d0;
+  --muted: #777;
+  --line: #242424;
+  --accent: #a8a8a8;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh 5vw 10vh;
+}
+
+.logo-stage {
+  position: relative;
+  width: min(78vw, 920px);
+  height: min(46vw, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-mark,
+.logo-wordmark {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.logo-mark {
+  transform: translateY(-6%);
+}
+
+.logo-wordmark {
+  transform: translateY(19%);
+}
+
+.logo-enter {
+  opacity: 0;
+  filter: blur(5px);
+}
+
+.logo-mark.logo-enter {
+  animation: mark-in 1.8s cubic-bezier(.2,.7,.2,1) .15s forwards;
+}
+
+.logo-wordmark.logo-enter {
+  animation: word-in 1.8s cubic-bezier(.2,.7,.2,1) .5s forwards;
+}
+
+@keyframes mark-in {
+  0% { opacity: 0; transform: translate(-12vw, -10%) scale(.88); filter: blur(8px); }
+  65% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(-6%) scale(1); filter: blur(0); }
+}
+
+@keyframes word-in {
+  0% { opacity: 0; transform: translate(12vw, 19%) scale(.92); filter: blur(8px); }
+  65% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(19%) scale(1); filter: blur(0); }
+}
+
+.main-nav {
+  display: flex;
+  gap: clamp(32px, 6vw, 90px);
+  margin-top: 2vh;
+}
+
+.main-nav a {
+  font-size: clamp(13px, 1.1vw, 16px);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: #8a8a8a;
+  transition: color .3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+  color: #ddd;
+}
+
+.board,
+.who,
+.works {
+  width: min(1200px, 88vw);
+  margin: 0 auto;
+  padding: 13vh 0;
+  border-top: 1px solid var(--line);
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 50px;
+}
+
+.board-item {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 40px;
+  padding: 0 0 34px;
+  max-width: 800px;
+}
+
+.board-item time {
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: #555;
+}
+
+.board-item h2 {
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 400;
+  margin: 0 0 16px;
+}
+
+.board-item p,
+.who-copy p {
+  color: #888;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 10vw;
+}
+
+.who h1 {
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: clamp(30px, 4.5vw, 62px);
+  line-height: 1.18;
+  font-weight: 400;
+  margin: 0;
+}
+
+.contact-block {
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+
+.contact-block span {
+  font-size: 10px;
+  letter-spacing: .24em;
+  color: #666;
+}
+
+.contact-block a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.works-list {
+  border-top: 1px solid var(--line);
+}
+
+.work {
+  border-bottom: 1px solid var(--line);
+}
+
+.work-trigger {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: #aaa;
+  padding: 26px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: 13px;
+}
+
+.work-trigger:hover,
+.work.open .work-trigger {
+  color: #e2e2e2;
+}
+
+.work-trigger .symbol {
+  font-size: 22px;
+  font-weight: 300;
+  transition: transform .35s ease;
+}
+
+.work.open .symbol {
+  transform: rotate(45deg);
+}
+
+.work-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .55s cubic-bezier(.2,.7,.2,1);
+}
+
+.work.open .work-panel {
+  grid-template-rows: 1fr;
+}
+
+.work-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.work-content {
+  display: grid;
+  grid-template-columns: minmax(250px, .85fr) 1.15fr;
+  gap: clamp(35px, 6vw, 90px);
+  padding: 10px 0 70px;
+}
+
+.work-cover {
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.work-meta h2 {
+  margin: 0;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 52px);
+}
+
+.work-meta .genre {
+  margin: 14px 0 45px;
+  color: #777;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.tabs {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+
+.tab {
+  background: transparent;
+  border: 0;
+  color: #555;
+  padding: 0 0 14px;
+  cursor: pointer;
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: 10px;
+}
+
+.tab.active,
+.tab:hover {
+  color: #ddd;
+}
+
+.tab-content {
+  display: none;
+  color: #999;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid #151515;
+}
+
+.track span:first-child {
+  color: #555;
+}
+
+.listen {
+  display: inline-block;
+  margin-top: 26px;
+  color: #aaa;
+  border-bottom: 1px solid #555;
+  padding-bottom: 4px;
+}
+
+.lyrics-note {
+  color: #666;
+}
+
+footer {
+  width: min(1200px, 88vw);
+  margin: 0 auto;
+  padding: 40px 0 70px;
+  display: flex;
+  justify-content: space-between;
+  color: #444;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+footer a:hover { color: #aaa; }
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: 86vh;
+    padding-top: 3vh;
+  }
+
+  .logo-stage {
+    width: 94vw;
+    height: 82vw;
+  }
+
+  .main-nav {
+    gap: 28px;
+  }
+
+  .main-nav a {
+    font-size: 11px;
+  }
+
+  .board,
+  .who,
+  .works {
+    width: 88vw;
+    padding: 11vh 0;
+  }
+
+  .board-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .who-grid,
+  .work-content {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .work-cover {
+    max-width: none;
+  }
+
+  .work-meta .genre {
+    margin-bottom: 32px;
+  }
+
+  footer {
+    width: 88vw;
+  }
+}
