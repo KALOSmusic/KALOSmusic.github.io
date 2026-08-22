@@ -7,32 +7,47 @@
   <meta name="description" content="KALOS — music, narrative, visual research and experimental works.">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header class="hero" id="home">
+<body data-view="home">
+
+  <!-- HOME -->
+  <header class="hero view view-home" id="home">
     <div class="logo-stage" aria-label="KALOS">
-      <img class="logo-mark logo-enter" src="kalos-mark-transparent.png" alt="">
-      <img class="logo-wordmark logo-enter" src="kalos-wordmark-transparent.png" alt="KALOS">
+      <img class="logo-mark" src="kalos-mark-transparent.png" alt="">
+      <img class="logo-wordmark" src="kalos-wordmark-transparent.png" alt="KALOS">
     </div>
 
     <nav class="main-nav" aria-label="Main navigation">
-      <a href="#who">Who is KALOS</a>
-      <a href="#works">Works</a>
+      <a href="#who" data-target="who">Who is KALOS</a>
+      <a href="#works" data-target="works">Works</a>
     </nav>
   </header>
 
-  <main>
-    <section class="board" aria-label="Updates">
-      <div class="section-label">BOARD</div>
-      <article class="board-item">
-        <time datetime="2026-08-22">22.08.2026</time>
-        <div>
-          <h2>Welcome to KALOS.</h2>
-          <p>The archive is being built. New works, concepts and texts will appear here.</p>
-        </div>
-      </article>
-    </section>
+  <section class="board view view-home" aria-label="Updates">
+    <div class="section-label">BOARD</div>
+    <article class="board-item">
+      <time datetime="2026-08-22">22.08.2026</time>
+      <div>
+        <h2>Welcome to KALOS.</h2>
+        <p>The archive is being built. New works, concepts and texts will appear here.</p>
+      </div>
+    </article>
+  </section>
 
-    <section class="who" id="who">
+  <footer class="view view-home">
+    <span>© 2026 KALOS</span>
+    <a href="#home" data-target="home">Back to top</a>
+  </footer>
+
+  <!-- WHO IS KALOS (separate world) -->
+  <section class="page view view-who" id="who">
+    <div class="subnav">
+      <a class="subnav-home" href="#home" data-target="home">KALOS</a>
+      <nav class="main-nav main-nav--sub" aria-label="Section navigation">
+        <a href="#works" data-target="works">Works</a>
+      </nav>
+    </div>
+
+    <div class="page-inner">
       <div class="section-label">WHO IS KALOS</div>
       <div class="who-grid">
         <h1>An independent artistic project exploring music, narrative and visual identity through an iterative creative process.</h1>
@@ -46,18 +61,23 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="works" id="works">
+  <!-- WORKS (separate world) -->
+  <section class="page view view-works" id="works">
+    <div class="subnav">
+      <a class="subnav-home" href="#home" data-target="home">KALOS</a>
+      <nav class="main-nav main-nav--sub" aria-label="Section navigation">
+        <a href="#who" data-target="who">Who is KALOS</a>
+      </nav>
+    </div>
+
+    <div class="page-inner">
       <div class="section-label">WORKS</div>
       <div id="works-list" class="works-list"></div>
-    </section>
-  </main>
-
-  <footer>
-    <span>© 2026 KALOS</span>
-    <a href="#home">Back to top</a>
-  </footer>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>

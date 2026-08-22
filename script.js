@@ -84,4 +84,36 @@ function renderWorks() {
   });
 }
 
+/* ===== View switching (Home / Who / Works — separate, non-scrolling worlds) ===== */
+
+const body = document.body;
+const logoMark = document.querySelector(".logo-mark");
+const logoWordmark = document.querySelector(".logo-wordmark");
+
+function replayLogoAnimation() {
+  [logoMark, logoWordmark].forEach(el => {
+    if (!el) return;
+    el.style.animation = "none";
+    // Force reflow so the animation can be re-triggered
+    void el.offsetWidth;
+    el.style.animation = "";
+  });
+}
+
+function setView(view) {
+  body.dataset.view = view;
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  if (view === "home") {
+    replayLogoAnimation();
+  }
+}
+
+document.querySelectorAll("[data-target]").forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    setView(link.dataset.target);
+  });
+});
+
 renderWorks();
+setView("home");
