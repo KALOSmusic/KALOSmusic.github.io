@@ -31,11 +31,11 @@ a {
 
 /* ===== View switching: home / who / works are separate worlds ===== */
 
-.view { display: none; }
+.view { display: none !important; }
 
-body[data-view="home"] .view-home { display: block; }
-body[data-view="who"] .view-who { display: block; }
-body[data-view="works"] .view-works { display: block; }
+body[data-view="home"] .view-home { display: block !important; }
+body[data-view="who"] .view-who { display: block !important; }
+body[data-view="works"] .view-works { display: block !important; }
 
 .page {
   min-height: 100vh;
