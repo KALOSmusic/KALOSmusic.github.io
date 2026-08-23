@@ -121,30 +121,98 @@ function attachWorkBehaviour() {
       btn.addEventListener("click", () => {
         const trackEl = btn.closest(".track");
         const tIndex = Number(trackEl.dataset.trackIndex);
-        playTrack(workEl, work, tIndex);
+        playTrack(workEl, work, wIndex, tIndex);
       });
     });
   });
 }
 
-function playTrack(workEl, work, tIndex) {
+/* ===== YouTube player (uses the official IFrame API for reliable
+   track jumping — the simple ?index= URL parameter is unreliable
+   and often always plays the first video) ===== */
+
+let ytApiReady = false;
+let ytApiLoading = false;
+const ytApiCallbacks = [];
+const ytPlayers = {}; // one real YT.Player instance per open album, keyed by work index
+
+function loadYouTubeApi(callback) {
+  if (ytApiReady) { callback(); return; }
+  ytApiCallbacks.push(callback);
+  if (ytApiLoading) return;
+  ytApiLoading = true;
+
+  window.onYouTubeIframeAPIReady = function () {
+    ytApiReady = true;
+    ytApiCallbacks.splice(0).forEach(cb => cb());
+  };
+
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+}
+
+function playTrack(workEl, work, wIndex, tIndex) {
   const placeholder = workEl.querySelector("[data-player-placeholder]");
   const frame = workEl.querySelector("[data-player-frame]");
 
-  const src = `https://www.youtube-nocookie.com/embed/videoseries?list=${work.youtubePlaylistId}&index=${tIndex}&autoplay=1`;
-  frame.innerHTML = `<iframe src="${src}" title="${work.title} player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-  frame.hidden = false;
-  placeholder.hidden = true;
-
   workEl.querySelectorAll(".track").forEach(t => t.classList.remove("playing"));
   workEl.querySelector(`.track[data-track-index="${tIndex}"]`).classList.add("playing");
+
+  const existing = ytPlayers[wIndex];
+  if (existing && existing.ready) {
+    placeholder.hidden = true;
+    frame.hidden = false;
+    existing.player.playVideoAt(tIndex);
+    return;
+  }
+
+  placeholder.hidden = true;
+  frame.hidden = false;
+
+  loadYouTubeApi(() => {
+    // Avoid creating it twice if the user clicked fast more than once
+    if (ytPlayers[wIndex]) {
+      if (ytPlayers[wIndex].ready) ytPlayers[wIndex].player.playVideoAt(tIndex);
+      else ytPlayers[wIndex].pendingIndex = tIndex;
+      return;
+    }
+
+    const mount = document.createElement("div");
+    frame.innerHTML = "";
+    frame.appendChild(mount);
+
+    const entry = { player: null, ready: false, pendingIndex: tIndex };
+    ytPlayers[wIndex] = entry;
+
+    entry.player = new YT.Player(mount, {
+      host: "https://www.youtube-nocookie.com",
+      playerVars: {
+        listType: "playlist",
+        list: work.youtubePlaylistId,
+        autoplay: 1
+      },
+      events: {
+        onReady: () => {
+          entry.ready = true;
+          entry.player.playVideoAt(entry.pendingIndex);
+        }
+      }
+    });
+  });
 }
 
 function stopPlayer(workEl) {
   const frame = workEl.querySelector("[data-player-frame]");
   const placeholder = workEl.querySelector("[data-player-placeholder]");
+  const wIndex = Number(workEl.dataset.work);
   if (!frame) return;
-  frame.innerHTML = "";
+
+  const entry = ytPlayers[wIndex];
+  if (entry && entry.ready) {
+    entry.player.pauseVideo();
+  }
+
   frame.hidden = true;
   if (placeholder) placeholder.hidden = false;
   workEl.querySelectorAll(".track.playing").forEach(t => t.classList.remove("playing"));
@@ -166,9 +234,7 @@ function replayLogoAnimation() {
 }
 
 function setView(view) {
-  document.querySelectorAll(".work.open .yt-player-frame").forEach(frame => {
-    frame.innerHTML = "";
-  });
+  document.querySelectorAll(".work.open").forEach(workEl => stopPlayer(workEl));
   body.dataset.view = view;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
   if (view === "home") {

@@ -424,6 +424,11 @@ footer.view-home {
   display: block;
 }
 
+.yt-player-placeholder[hidden],
+.yt-player-frame[hidden] {
+  display: none !important;
+}
+
 .lyric-entry {
   margin-bottom: 50px;
 }
