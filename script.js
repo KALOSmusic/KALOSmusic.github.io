@@ -30,10 +30,35 @@ function renderWorks() {
               <div class="tabs" role="tablist">
                 <button class="tab active" type="button" data-tab="concept">Concept</button>
                 <button class="tab" type="button" data-tab="audio">Audio</button>
-                <button class="tab" type="button" data-tab="lyrics">Lyrics</button>
               </div>
 
-              <div class="tab-content active" data-content="concept">${work.concept}</div>
+              <div class="tab-content active" data-content="concept">
+
+                ${work.images && work.images.length ? `
+                  <div class="gallery" data-gallery>
+                    ${work.images.map((img, iIndex) => `
+                      <div class="gallery-slide" data-gallery-slide="${iIndex}">
+                        <img src="${img}" alt="${work.title} — image ${iIndex + 1}" loading="lazy">
+                      </div>
+                    `).join("")}
+                  </div>
+                  ${work.images.length > 1 ? `
+                    <div class="gallery-dots" data-gallery-dots>
+                      ${work.images.map((_, iIndex) => `
+                        <button class="gallery-dot ${iIndex === 0 ? "active" : ""}" type="button" data-gallery-dot="${iIndex}" aria-label="Image ${iIndex + 1}"></button>
+                      `).join("")}
+                    </div>
+                  ` : ""}
+                ` : ""}
+
+                <div class="lang-toggle" data-lang-toggle>
+                  <button class="lang-btn active" type="button" data-lang="en">EN</button>
+                  <button class="lang-btn" type="button" data-lang="it">IT</button>
+                </div>
+
+                <div class="concept-text active" data-concept-lang="en">${work.concept.en}</div>
+                <div class="concept-text" data-concept-lang="it">${work.concept.it}</div>
+              </div>
 
               <div class="tab-content" data-content="audio">
                 <div class="yt-player">
@@ -44,28 +69,22 @@ function renderWorks() {
                 </div>
                 ${work.tracks.map((track, tIndex) => `
                   <div class="track" data-track-index="${tIndex}">
-                    <button class="track-play" type="button" aria-label="Play ${escapeHtml(track)}">
-                      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                        <path d="M6 4l14 8-14 8V4z" fill="currentColor"/>
-                      </svg>
-                    </button>
-                    <span class="track-index">${String(tIndex + 1).padStart(2, "0")}</span>
-                    <span class="track-title">${track}</span>
-                  </div>
-                `).join("")}
-              </div>
-
-              <div class="tab-content" data-content="lyrics">
-                ${work.lyrics.map(entry => `
-                  <div class="lyric-entry">
-                    <h3>${entry.title}</h3>
-                    ${entry.text
-                      ? `<div class="lyric-cols">
-                           <div class="lyric-text">${escapeHtml(entry.text).replace(/\n/g, "<br>")}</div>
-                           ${entry.translation ? `<div class="lyric-text lyric-translation">${escapeHtml(entry.translation).replace(/\n/g, "<br>")}</div>` : ""}
-                         </div>`
-                      : `<p class="lyrics-note">Lyrics coming soon.</p>`
-                    }
+                    <div class="track-row">
+                      <button class="track-play" type="button" aria-label="Play ${escapeHtml(track.title)}">
+                        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                          <path d="M6 4l14 8-14 8V4z" fill="currentColor"/>
+                        </svg>
+                      </button>
+                      <span class="track-index">${String(tIndex + 1).padStart(2, "0")}</span>
+                      <span class="track-title">${track.title}</span>
+                      <button class="track-lyrics-toggle" type="button" data-lyrics-toggle>Lyrics</button>
+                    </div>
+                    <div class="track-lyrics" data-track-lyrics hidden>
+                      ${track.lyrics
+                        ? `<div class="lyric-text">${escapeHtml(track.lyrics).replace(/\n/g, "<br>")}</div>`
+                        : `<p class="lyrics-note">Lyrics coming soon.</p>`
+                      }
+                    </div>
                   </div>
                 `).join("")}
               </div>
@@ -124,6 +143,62 @@ function attachWorkBehaviour() {
         playTrack(workEl, work, wIndex, tIndex);
       });
     });
+
+    // Per-track lyrics toggle — opens inline, does NOT touch the player
+    workEl.querySelectorAll("[data-lyrics-toggle]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const trackEl = btn.closest(".track");
+        const panel = trackEl.querySelector("[data-track-lyrics]");
+        const isOpen = !panel.hidden;
+        panel.hidden = isOpen;
+        btn.classList.toggle("active", !isOpen);
+        btn.textContent = isOpen ? "Lyrics" : "Hide lyrics";
+      });
+    });
+
+    // Concept language toggle (EN / IT)
+    const langToggle = workEl.querySelector("[data-lang-toggle]");
+    if (langToggle) {
+      langToggle.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const lang = btn.dataset.lang;
+          langToggle.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          workEl.querySelectorAll("[data-concept-lang]").forEach(el => {
+            el.classList.toggle("active", el.dataset.conceptLang === lang);
+          });
+        });
+      });
+    }
+
+    // Gallery: swipe (native scroll-snap) + dot navigation, dots follow scroll position
+    const gallery = workEl.querySelector("[data-gallery]");
+    if (gallery) {
+      const dots = workEl.querySelectorAll("[data-gallery-dot]");
+      const slides = workEl.querySelectorAll("[data-gallery-slide]");
+
+      dots.forEach(dot => {
+        dot.addEventListener("click", () => {
+          const index = Number(dot.dataset.galleryDot);
+          slides[index].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        });
+      });
+
+      if (slides.length && dots.length) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+              const index = Number(entry.target.dataset.gallerySlide);
+              dots.forEach(d => d.classList.remove("active"));
+              const activeDot = workEl.querySelector(`[data-gallery-dot="${index}"]`);
+              if (activeDot) activeDot.classList.add("active");
+            }
+          });
+        }, { root: gallery, threshold: [0.6] });
+
+        slides.forEach(slide => observer.observe(slide));
+      }
+    }
   });
 }
 
