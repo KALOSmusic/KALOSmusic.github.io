@@ -1,26 +1,20 @@
-const works = [
-  {
-    title: "Lorna — Insatiable",
-    genre: "Funk / Afrobeat",
-    cover: "lorna-insatiable.jpg",
-    concept: `
-      <p><strong>Lorna</strong> is a fictional singer: young, beautiful, Black, charismatic, sensual, outspoken and fierce.</p>
-      <p><em>Insatiable</em> explores her everyday life, her way of thinking and the experiences that shape her world, through a collection of funk and afrobeat songs.</p>
-    `,
-    tracks: [
-      "Still", "Bored", "Hunt", "Again", "Insatiable",
-      "Don't Love Me", "No Permission", "Take", "Get Gone", "Funk A"
-    ],
-    youtube: "https://youtube.com/playlist?list=PLOpjGYfNpjeY&si=5oRIIWCofe5tAJcI",
-    lyrics: `<p class="lyrics-note">Lyrics will be added here. The final version will support original text and, where useful, an Italian translation.</p>`
-  }
-];
+/* Questo file gestisce il comportamento del sito.
+   I CONTENUTI degli album (titoli, testi, tracce...) NON sono
+   qui: sono nel file works-data.js, pensato per essere
+   modificato senza toccare questo codice. */
 
 const list = document.getElementById("works-list");
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 function renderWorks() {
-  list.innerHTML = works.map((work, index) => `
-    <article class="work">
+  list.innerHTML = KALOS_WORKS.map((work, wIndex) => `
+    <article class="work" data-work="${wIndex}">
       <button class="work-trigger" type="button" aria-expanded="false">
         <span>${work.title}</span>
         <span class="symbol">+</span>
@@ -40,13 +34,42 @@ function renderWorks() {
               </div>
 
               <div class="tab-content active" data-content="concept">${work.concept}</div>
+
               <div class="tab-content" data-content="audio">
-                ${work.tracks.map((track, i) => `
-                  <div class="track"><span>${String(i + 1).padStart(2, "0")}</span><span>${track}</span></div>
+                <div class="yt-player">
+                  <div class="yt-player-placeholder" data-player-placeholder>
+                    <span>Choose a track to play</span>
+                  </div>
+                  <div class="yt-player-frame" data-player-frame hidden></div>
+                </div>
+                ${work.tracks.map((track, tIndex) => `
+                  <div class="track" data-track-index="${tIndex}">
+                    <button class="track-play" type="button" aria-label="Play ${escapeHtml(track)}">
+                      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                        <path d="M6 4l14 8-14 8V4z" fill="currentColor"/>
+                      </svg>
+                    </button>
+                    <span class="track-index">${String(tIndex + 1).padStart(2, "0")}</span>
+                    <span class="track-title">${track}</span>
+                  </div>
                 `).join("")}
-                <a class="listen" href="${work.youtube}" target="_blank" rel="noopener">Listen on YouTube ↗</a>
               </div>
-              <div class="tab-content" data-content="lyrics">${work.lyrics}</div>
+
+              <div class="tab-content" data-content="lyrics">
+                ${work.lyrics.map(entry => `
+                  <div class="lyric-entry">
+                    <h3>${entry.title}</h3>
+                    ${entry.text
+                      ? `<div class="lyric-cols">
+                           <div class="lyric-text">${escapeHtml(entry.text).replace(/\n/g, "<br>")}</div>
+                           ${entry.translation ? `<div class="lyric-text lyric-translation">${escapeHtml(entry.translation).replace(/\n/g, "<br>")}</div>` : ""}
+                         </div>`
+                      : `<p class="lyrics-note">Lyrics coming soon.</p>`
+                    }
+                  </div>
+                `).join("")}
+              </div>
+
             </div>
           </div>
         </div>
@@ -54,6 +77,10 @@ function renderWorks() {
     </article>
   `).join("");
 
+  attachWorkBehaviour();
+}
+
+function attachWorkBehaviour() {
   document.querySelectorAll(".work-trigger").forEach(trigger => {
     trigger.addEventListener("click", () => {
       const current = trigger.closest(".work");
@@ -63,25 +90,64 @@ function renderWorks() {
         if (work !== current) {
           work.classList.remove("open");
           work.querySelector(".work-trigger").setAttribute("aria-expanded", "false");
+          stopPlayer(work);
         }
       });
 
       current.classList.toggle("open", !isOpen);
       trigger.setAttribute("aria-expanded", String(!isOpen));
+      if (isOpen) stopPlayer(current);
     });
   });
 
-  document.querySelectorAll(".work").forEach(work => {
-    work.querySelectorAll(".tab").forEach(tab => {
+  document.querySelectorAll(".work").forEach(workEl => {
+    const wIndex = Number(workEl.dataset.work);
+    const work = KALOS_WORKS[wIndex];
+
+    // Tabs
+    workEl.querySelectorAll(".tab").forEach(tab => {
       tab.addEventListener("click", () => {
         const target = tab.dataset.tab;
-        work.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        work.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        workEl.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        workEl.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
         tab.classList.add("active");
-        work.querySelector(`[data-content="${target}"]`).classList.add("active");
+        workEl.querySelector(`[data-content="${target}"]`).classList.add("active");
+        if (target !== "audio") stopPlayer(workEl);
+      });
+    });
+
+    // Track play buttons -> load embedded YouTube player at the right playlist index
+    workEl.querySelectorAll(".track-play").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const trackEl = btn.closest(".track");
+        const tIndex = Number(trackEl.dataset.trackIndex);
+        playTrack(workEl, work, tIndex);
       });
     });
   });
+}
+
+function playTrack(workEl, work, tIndex) {
+  const placeholder = workEl.querySelector("[data-player-placeholder]");
+  const frame = workEl.querySelector("[data-player-frame]");
+
+  const src = `https://www.youtube-nocookie.com/embed/videoseries?list=${work.youtubePlaylistId}&index=${tIndex}&autoplay=1`;
+  frame.innerHTML = `<iframe src="${src}" title="${work.title} player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  frame.hidden = false;
+  placeholder.hidden = true;
+
+  workEl.querySelectorAll(".track").forEach(t => t.classList.remove("playing"));
+  workEl.querySelector(`.track[data-track-index="${tIndex}"]`).classList.add("playing");
+}
+
+function stopPlayer(workEl) {
+  const frame = workEl.querySelector("[data-player-frame]");
+  const placeholder = workEl.querySelector("[data-player-placeholder]");
+  if (!frame) return;
+  frame.innerHTML = "";
+  frame.hidden = true;
+  if (placeholder) placeholder.hidden = false;
+  workEl.querySelectorAll(".track.playing").forEach(t => t.classList.remove("playing"));
 }
 
 /* ===== View switching (Home / Who / Works — separate, non-scrolling worlds) ===== */
@@ -94,13 +160,15 @@ function replayLogoAnimation() {
   [logoMark, logoWordmark].forEach(el => {
     if (!el) return;
     el.style.animation = "none";
-    // Force reflow so the animation can be re-triggered
     void el.offsetWidth;
     el.style.animation = "";
   });
 }
 
 function setView(view) {
+  document.querySelectorAll(".work.open .yt-player-frame").forEach(frame => {
+    frame.innerHTML = "";
+  });
   body.dataset.view = view;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
   if (view === "home") {

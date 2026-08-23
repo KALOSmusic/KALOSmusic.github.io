@@ -346,14 +346,114 @@ footer.view-home {
 
 .track {
   display: grid;
-  grid-template-columns: 34px 1fr;
+  grid-template-columns: 30px 34px 1fr;
+  align-items: center;
   gap: 14px;
   padding: 11px 0;
   border-bottom: 1px solid #151515;
+  transition: background-color .3s ease;
 }
 
-.track span:first-child {
+.track.playing {
+  background: rgba(255,255,255,0.03);
+}
+
+.track-play {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #3a3a3a;
+  background: transparent;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .3s ease, color .3s ease, background-color .3s ease;
+  padding: 0;
+}
+
+.track-play:hover {
+  border-color: #999;
+  color: #eee;
+}
+
+.track.playing .track-play {
+  border-color: #eee;
+  color: #eee;
+  background: rgba(255,255,255,0.06);
+}
+
+.track-index {
   color: #555;
+  font-size: 12px;
+}
+
+.track.playing .track-title {
+  color: #eee;
+}
+
+.yt-player {
+  margin-bottom: 30px;
+  border: 1px solid var(--line);
+  aspect-ratio: 16/9;
+  position: relative;
+  background: #0a0a0a;
+}
+
+.yt-player-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.yt-player-frame {
+  position: absolute;
+  inset: 0;
+}
+
+.yt-player-frame iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lyric-entry {
+  margin-bottom: 50px;
+}
+
+.lyric-entry h3 {
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #ccc;
+  margin: 0 0 16px;
+}
+
+.lyric-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.lyric-text {
+  color: #999;
+  line-height: 1.9;
+  font-size: 14px;
+  white-space: normal;
+}
+
+.lyric-translation {
+  color: #767676;
+  font-style: italic;
+  border-left: 1px solid var(--line);
+  padding-left: 24px;
 }
 
 .listen {
@@ -437,6 +537,18 @@ footer a:hover { color: #aaa; }
 
   .work-meta .genre {
     margin-bottom: 32px;
+  }
+
+  .lyric-cols {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .lyric-translation {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
   }
 
   footer {
