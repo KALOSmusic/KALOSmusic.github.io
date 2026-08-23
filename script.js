@@ -20,8 +20,8 @@ const list = document.getElementById("works-list");
 
 function renderWorks() {
   list.innerHTML = works.map((work, index) => `
-    <article class="work ${index === 0 ? "open" : ""}">
-      <button class="work-trigger" type="button" aria-expanded="${index === 0}">
+    <article class="work">
+      <button class="work-trigger" type="button" aria-expanded="false">
         <span>${work.title}</span>
         <span class="symbol">+</span>
       </button>
