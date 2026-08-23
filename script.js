@@ -324,5 +324,29 @@ document.querySelectorAll("[data-target]").forEach(link => {
   });
 });
 
+/* ===== EN / IT toggle for static pages (Who is KALOS, Contacts).
+   Separate from the per-album concept toggle above, which is
+   generated dynamically inside each .work — this one handles
+   the toggles that are already present in the static HTML. */
+
+function initStaticLangToggles() {
+  document.querySelectorAll("[data-lang-toggle]").forEach(toggle => {
+    if (toggle.closest(".work")) return; // handled by attachWorkBehaviour instead
+
+    const group = toggle.dataset.langToggle;
+    toggle.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const lang = btn.dataset.lang;
+        toggle.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.querySelectorAll(`[data-lang-group="${group}"]`).forEach(el => {
+          el.classList.toggle("active", el.dataset.pageLang === lang);
+        });
+      });
+    });
+  });
+}
+
 renderWorks();
+initStaticLangToggles();
 setView("home");

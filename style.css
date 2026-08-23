@@ -36,6 +36,7 @@ a {
 body[data-view="home"] .view-home { display: block !important; }
 body[data-view="who"] .view-who { display: block !important; }
 body[data-view="works"] .view-works { display: block !important; }
+body[data-view="contacts"] .view-contacts { display: block !important; }
 
 .page {
   min-height: 100vh;
@@ -210,6 +211,9 @@ footer.view-home {
   margin-top: 60px;
   padding-top: 30px;
   border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .contact-block span {
@@ -222,6 +226,24 @@ footer.view-home {
   display: inline-block;
   margin-top: 10px;
   color: #aaa;
+}
+
+.contact-block a:hover {
+  color: #eee;
+}
+
+/* ===== EN / IT toggle for static pages (Who is KALOS, Contacts) ===== */
+
+.lang-block {
+  display: none;
+}
+
+.lang-block.active {
+  display: block;
+}
+
+.page-inner > .lang-toggle {
+  margin-bottom: 40px;
 }
 
 .works-list {
