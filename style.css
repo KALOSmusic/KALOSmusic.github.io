@@ -456,16 +456,17 @@ footer.view-home {
 .concept-copyright {
   display: inline-block;
   margin-top: 46px;
-  color: #555;
+  color: #ccc;
   font-size: 11px;
   letter-spacing: .08em;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid #555;
+  padding-bottom: 3px;
   transition: color .3s ease, border-color .3s ease;
 }
 
 .concept-copyright:hover {
-  color: #aaa;
-  border-color: #555;
+  color: #fff;
+  border-color: #ccc;
 }
 
 /* ===== Legal / Rights / Credits page ===== */
@@ -645,15 +646,33 @@ footer {
   width: min(1200px, 88vw);
   margin: 0 auto;
   padding: 40px 0 70px;
-  display: flex;
-  justify-content: space-between;
-  color: #444;
+  color: #ddd;
   font-size: 10px;
   letter-spacing: .15em;
   text-transform: uppercase;
 }
 
-footer a:hover { color: #aaa; }
+footer span,
+footer a {
+  display: block;
+  margin-bottom: 14px;
+}
+
+footer a:last-child {
+  margin-bottom: 0;
+}
+
+footer a {
+  color: #ddd;
+  border-bottom: 1px solid #555;
+  padding-bottom: 3px;
+  width: fit-content;
+}
+
+footer a:hover {
+  color: #fff;
+  border-color: #ddd;
+}
 
 @media (max-width: 760px) {
   .hero {
