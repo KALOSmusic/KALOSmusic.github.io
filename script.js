@@ -58,6 +58,8 @@ function renderWorks() {
 
                 <div class="concept-text active" data-concept-lang="en">${work.concept.en}</div>
                 <div class="concept-text" data-concept-lang="it">${work.concept.it}</div>
+
+                <a class="concept-copyright" href="#legal" data-target="legal">© 2026 KALOS</a>
               </div>
 
               <div class="tab-content" data-content="audio">
@@ -100,6 +102,16 @@ function renderWorks() {
 }
 
 function attachWorkBehaviour() {
+  // Links generated dynamically inside work content (e.g. the "© 2026 KALOS"
+  // legal link in Concept) aren't caught by the page's initial data-target
+  // wiring, since that runs before this content exists — handle them here.
+  document.querySelectorAll(".work [data-target]").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      setView(link.dataset.target);
+    });
+  });
+
   document.querySelectorAll(".work-trigger").forEach(trigger => {
     trigger.addEventListener("click", () => {
       const current = trigger.closest(".work");

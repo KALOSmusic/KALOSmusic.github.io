@@ -37,6 +37,7 @@ body[data-view="home"] .view-home { display: block !important; }
 body[data-view="who"] .view-who { display: block !important; }
 body[data-view="works"] .view-works { display: block !important; }
 body[data-view="contacts"] .view-contacts { display: block !important; }
+body[data-view="legal"] .view-legal { display: block !important; }
 
 .page {
   min-height: 100vh;
@@ -450,6 +451,57 @@ footer.view-home {
 
 .concept-text.active {
   display: block;
+}
+
+.concept-copyright {
+  display: inline-block;
+  margin-top: 46px;
+  color: #555;
+  font-size: 11px;
+  letter-spacing: .08em;
+  border-bottom: 1px solid transparent;
+  transition: color .3s ease, border-color .3s ease;
+}
+
+.concept-copyright:hover {
+  color: #aaa;
+  border-color: #555;
+}
+
+/* ===== Legal / Rights / Credits page ===== */
+
+.legal-entry {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-entry:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.legal-entry h3 {
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: .04em;
+  color: #ccc;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.legal-entry p {
+  color: #999;
+  line-height: 1.8;
+  font-size: 14px;
+  margin: 0;
+}
+
+.legal-copyright p {
+  color: #777;
+  letter-spacing: .04em;
 }
 
 .track {
