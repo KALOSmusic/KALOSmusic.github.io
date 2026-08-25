@@ -359,6 +359,48 @@ function initStaticLangToggles() {
   });
 }
 
+/* ===== Structured data (schema.org) for search engines.
+   Generated automatically from KALOS_WORKS, so every new album added
+   to works-data.js gets picked up here too — nothing to maintain by hand. */
+
+function injectStructuredData() {
+  const albums = KALOS_WORKS.map(work => {
+    const parts = work.title.split(" — ");
+    const artistName = parts.length > 1 ? parts[0] : "KALOS";
+    const albumName = parts.length > 1 ? parts.slice(1).join(" — ") : work.title;
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "MusicAlbum",
+      "name": albumName,
+      "byArtist": {
+        "@type": "MusicGroup",
+        "name": artistName
+      },
+      "genre": work.genre,
+      "image": `https://kalosmusic.github.io/${work.cover}`,
+      "url": "https://kalosmusic.github.io/#works",
+      "publisher": {
+        "@type": "Organization",
+        "name": "KALOS"
+      },
+      "track": work.tracks.map((track, index) => ({
+        "@type": "MusicRecording",
+        "name": track.title,
+        "position": index + 1
+      }))
+    };
+  });
+
+  albums.forEach(albumData => {
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(albumData);
+    document.head.appendChild(script);
+  });
+}
+
 renderWorks();
 initStaticLangToggles();
+injectStructuredData();
 setView("home");
