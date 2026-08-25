@@ -6,6 +6,9 @@
   --muted: #777;
   --line: #242424;
   --accent: #a8a8a8;
+  --gold: #cdb388;
+  --gold-bright: #e8cea3;
+  --ink: #eae5d9;
 }
 
 * { box-sizing: border-box; }
@@ -56,10 +59,10 @@ body[data-view="legal"] .view-legal { display: block !important; }
   font-family: "Libre Baskerville", Georgia, serif;
   font-size: 15px;
   letter-spacing: .1em;
-  color: #999;
+  color: var(--gold);
 }
 
-.subnav-home:hover { color: #ddd; }
+.subnav-home:hover { color: var(--gold-bright); }
 
 .page-inner {
   width: min(1200px, 88vw);
@@ -136,13 +139,13 @@ body[data-view="legal"] .view-legal { display: block !important; }
   font-size: clamp(13px, 1.1vw, 16px);
   text-transform: uppercase;
   letter-spacing: .18em;
-  color: #8a8a8a;
+  color: var(--gold);
   transition: color .3s ease;
 }
 
 .main-nav a:hover,
 .main-nav a:focus-visible {
-  color: #ddd;
+  color: var(--gold-bright);
 }
 
 .main-nav--sub {
@@ -162,7 +165,7 @@ footer.view-home {
   font-size: 11px;
   letter-spacing: .28em;
   text-transform: uppercase;
-  color: #666;
+  color: var(--gold);
   margin-bottom: 50px;
 }
 
@@ -170,7 +173,7 @@ footer.view-home {
   font-family: "Libre Baskerville", Georgia, serif;
   font-size: clamp(22px, 3vw, 38px);
   font-weight: 400;
-  color: #9a8a72;
+  color: var(--gold);
   margin: 0 0 80px;
 }
 
@@ -208,18 +211,19 @@ footer.view-home {
   font-family: "Libre Baskerville", Georgia, serif;
   font-size: clamp(19px, 2.4vw, 26px);
   font-weight: 400;
+  color: var(--ink);
   margin: 0 0 12px;
 }
 
 .board-info .genre {
-  color: #777;
+  color: var(--gold);
   font-size: 12px;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
 
 .who-copy p {
-  color: #888;
+  color: var(--ink);
   line-height: 1.8;
   font-size: 15px;
 }
@@ -235,6 +239,7 @@ footer.view-home {
   font-size: clamp(30px, 4.5vw, 62px);
   line-height: 1.18;
   font-weight: 400;
+  color: var(--ink);
   margin: 0;
 }
 
@@ -250,17 +255,17 @@ footer.view-home {
 .contact-block span {
   font-size: 10px;
   letter-spacing: .24em;
-  color: #666;
+  color: var(--gold);
 }
 
 .contact-block a {
   display: inline-block;
   margin-top: 10px;
-  color: #aaa;
+  color: var(--ink);
 }
 
 .contact-block a:hover {
-  color: #eee;
+  color: var(--gold-bright);
 }
 
 /* ===== EN / IT toggle for static pages (Who is KALOS, Contacts) ===== */
@@ -352,11 +357,12 @@ footer.view-home {
   font-family: "Libre Baskerville", Georgia, serif;
   font-weight: 400;
   font-size: clamp(28px, 4vw, 52px);
+  color: var(--ink);
 }
 
 .work-meta .genre {
   margin: 14px 0 45px;
-  color: #777;
+  color: var(--gold);
   font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -372,7 +378,7 @@ footer.view-home {
 .tab {
   background: transparent;
   border: 0;
-  color: #555;
+  color: #8a7f6c;
   padding: 0 0 14px;
   cursor: pointer;
   font: inherit;
@@ -383,12 +389,12 @@ footer.view-home {
 
 .tab.active,
 .tab:hover {
-  color: #ddd;
+  color: var(--gold);
 }
 
 .tab-content {
   display: none;
-  color: #999;
+  color: var(--ink);
   line-height: 1.8;
   font-size: 14px;
 }
@@ -460,8 +466,8 @@ footer.view-home {
 
 .lang-btn {
   background: transparent;
-  border: 1px solid #333;
-  color: #666;
+  border: 1px solid #4a4438;
+  color: #9a8f7c;
   padding: 5px 14px;
   font-size: 10px;
   letter-spacing: .16em;
@@ -471,8 +477,8 @@ footer.view-home {
 
 .lang-btn.active,
 .lang-btn:hover {
-  color: #eee;
-  border-color: #777;
+  color: var(--gold);
+  border-color: var(--gold);
 }
 
 .concept-text {
@@ -486,17 +492,17 @@ footer.view-home {
 .concept-copyright {
   display: inline-block;
   margin-top: 46px;
-  color: #ccc;
+  color: var(--gold);
   font-size: 11px;
   letter-spacing: .08em;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #4a4438;
   padding-bottom: 3px;
   transition: color .3s ease, border-color .3s ease;
 }
 
 .concept-copyright:hover {
-  color: #fff;
-  border-color: #ccc;
+  color: var(--gold-bright);
+  border-color: var(--gold);
 }
 
 /* ===== Legal / Rights / Credits page ===== */
@@ -518,20 +524,20 @@ footer.view-home {
   font-weight: 400;
   font-size: 15px;
   letter-spacing: .04em;
-  color: #ccc;
+  color: var(--gold);
   margin: 0 0 14px;
   text-transform: uppercase;
 }
 
 .legal-entry p {
-  color: #999;
+  color: var(--ink);
   line-height: 1.8;
   font-size: 14px;
   margin: 0;
 }
 
 .legal-copyright p {
-  color: #777;
+  color: var(--ink);
   letter-spacing: .04em;
 }
 
@@ -554,8 +560,8 @@ footer.view-home {
 
 .track-lyrics-toggle {
   background: transparent;
-  border: 1px solid #333;
-  color: #666;
+  border: 1px solid #4a4438;
+  color: var(--gold);
   padding: 4px 10px;
   font-size: 9px;
   letter-spacing: .12em;
@@ -567,13 +573,13 @@ footer.view-home {
 
 .track-lyrics-toggle:hover,
 .track-lyrics-toggle.active {
-  color: #eee;
-  border-color: #777;
+  color: var(--gold-bright);
+  border-color: var(--gold);
 }
 
 .track-lyrics {
   padding: 18px 0 6px 44px;
-  color: #999;
+  color: var(--ink);
   font-size: 13px;
   line-height: 1.9;
 }
@@ -609,12 +615,16 @@ footer.view-home {
 }
 
 .track-index {
-  color: #555;
+  color: var(--gold);
   font-size: 12px;
 }
 
+.track-title {
+  color: var(--ink);
+}
+
 .track.playing .track-title {
-  color: #eee;
+  color: var(--gold-bright);
 }
 
 .yt-player {
@@ -654,7 +664,7 @@ footer.view-home {
 }
 
 .lyric-text {
-  color: #999;
+  color: var(--ink);
   line-height: 1.9;
   font-size: 14px;
   white-space: normal;
@@ -669,7 +679,7 @@ footer.view-home {
 }
 
 .lyrics-note {
-  color: #666;
+  color: #8f8a7c;
 }
 
 footer {
