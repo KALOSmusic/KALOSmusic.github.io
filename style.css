@@ -137,6 +137,14 @@ body[data-view="cookies"] .view-cookies { display: block !important; }
   margin-top: 4vh;
 }
 
+/* "Who is KALOS" is much longer than "Works"/"Contacts", so even
+   mathematically equal spacing looks left-heavy under the centered
+   logo. Nudge the whole row slightly right to compensate — a small,
+   capped offset rather than one that keeps growing with the viewport. */
+.hero .main-nav {
+  margin-left: clamp(8px, 2vw, 22px);
+}
+
 .main-nav a {
   font-size: clamp(13px, 1.1vw, 16px);
   text-transform: uppercase;
@@ -740,6 +748,10 @@ footer a:hover {
 
   .main-nav {
     gap: 48px;
+  }
+
+  .hero .main-nav {
+    margin-left: 14px;
   }
 
   .main-nav a {
