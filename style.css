@@ -41,6 +41,8 @@ body[data-view="who"] .view-who { display: block !important; }
 body[data-view="works"] .view-works { display: block !important; }
 body[data-view="contacts"] .view-contacts { display: block !important; }
 body[data-view="legal"] .view-legal { display: block !important; }
+body[data-view="privacy"] .view-privacy { display: block !important; }
+body[data-view="cookies"] .view-cookies { display: block !important; }
 
 .page {
   min-height: 100vh;
@@ -787,4 +789,32 @@ footer a:hover {
   footer {
     width: 88vw;
   }
+}
+
+
+/* ===== Privacy / Cookie policy ===== */
+.policy-block {
+  width: min(900px, 100%);
+  margin-top: 2rem;
+  line-height: 1.8;
+}
+
+.policy-block h3 {
+  margin: 2.2rem 0 .7rem;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  color: var(--gold);
+}
+
+.policy-block p,
+.policy-block li {
+  color: var(--ink);
+}
+
+.policy-block ul {
+  padding-left: 1.25rem;
+}
+
+.policy-block code {
+  color: var(--accent);
 }
