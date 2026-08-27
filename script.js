@@ -79,14 +79,16 @@ function renderWorks() {
                       </button>
                       <span class="track-index">${String(tIndex + 1).padStart(2, "0")}</span>
                       <span class="track-title">${track.title}</span>
-                      <button class="track-lyrics-toggle" type="button" data-lyrics-toggle>Lyrics</button>
+                      ${work.instrumental ? "" : `<button class="track-lyrics-toggle" type="button" data-lyrics-toggle>Lyrics</button>`}
                     </div>
+                    ${work.instrumental ? "" : `
                     <div class="track-lyrics" data-track-lyrics hidden>
                       ${track.lyrics
                         ? `<div class="lyric-text">${escapeHtml(track.lyrics).replace(/\n/g, "<br>")}</div>`
                         : `<p class="lyrics-note">Lyrics coming soon.</p>`
                       }
                     </div>
+                    `}
                   </div>
                 `).join("")}
               </div>
@@ -367,7 +369,7 @@ function injectStructuredData() {
   const albums = KALOS_WORKS.map(work => {
     const parts = work.title.split(" — ");
     const artistName = parts.length > 1 ? parts[0] : "KALOS";
-    const albumName = parts.length > 1 ? parts.slice(1).join(" — ") : work.title;
+    const albumName = (parts.length > 1 ? parts.slice(1).join(" — ") : work.title).replace(/^"+|"+$/g, "").trim();
 
     return {
       "@context": "https://schema.org",

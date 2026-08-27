@@ -20,10 +20,20 @@
 
    CAMPI DI OGNI ALBUM
    --------------------------------
-   title    → Nome dell'album, es. "Lorna — Insatiable"
-   genre    → Genere musicale, es. "Funk / Afrobeat"
+   title    → Nome dell'album. Ricordati le virgolette attorno al
+              titolo, es. "Lorna — \"Insatiable\"" oppure "\"TUESDAY\""
+              (se l'album non ha un nome artista a parte).
+   genre    → Genere musicale, es. "Funk / Rock / Afrobeat".
+              Se l'album è strumentale (senza testi), scrivi
+              "Instrumental" come primo elemento, es.
+              "Instrumental / Noise / Post-Hardcore".
    cover    → Nome del file immagine di copertina (usato anche
               nell'elenco Works), es. "lorna-insatiable.jpg"
+   instrumental → Scrivi "true" (senza virgolette) SOLO se l'album
+              non ha testi da mostrare: in quel caso il pulsante
+              "Lyrics" accanto a ogni brano non comparirà affatto.
+              Per un album con testi, ometti del tutto questa riga
+              (non serve scrivere "false").
    concept  → Il testo del Concept, in due lingue:
               concept.en → versione inglese
               concept.it → versione italiana
@@ -40,16 +50,95 @@
               playlist YouTube. Ogni traccia è un oggetto con:
               title  → nome della canzone
               lyrics → testo completo della canzone. Lascia ""
-                       se non lo hai ancora. Per andare a capo,
-                       usa \n. Il testo compare con un pulsante
-                       "Lyrics" accanto al brano, dentro la
-                       stessa pagina Audio (non interrompe la
-                       riproduzione).
+                       se non lo hai ancora (o ometti il campo del
+                       tutto per un album "instrumental: true").
+                       Per andare a capo, usa \n. Il testo compare
+                       con un pulsante "Lyrics" accanto al brano,
+                       dentro la stessa pagina Audio (non
+                       interrompe la riproduzione).
    ============================================================ */
 
 const KALOS_WORKS = [
   {
-    title: "Lorna — Insatiable",
+    title: "Morchia Quartet — \"Morchia 1\"",
+    genre: "Instrumental / Noise / Post-Hardcore / Jazzcore",
+    cover: "morchia-1-cover.jpg",
+    instrumental: true,
+
+    concept: {
+      en: `
+        <p>Morchia Quartet is a fictional four-piece band built around a simple idea: music without rules, without comfort, without the need to explain itself. The four members always appear with their faces covered by black balaclavas — no biography, no story about where they come from, no explanation of who they really are. They exist only through their music.</p>
+        <p>The lineup is drums, guitar, bass and saxophone. The saxophonist moves freely between soprano, alto, tenor and baritone, using the instrument as much as a source of noise and physical energy as a melodic voice — screaming, scraping, colliding with the guitars, or dissolving into the rhythm section like another piece of distorted machinery.</p>
+        <p>Morchia Quartet is rooted in experimental music and in the more extreme, unconventional sides of rock, jazz and contemporary sound — drawing from early-1990s noise and post-hardcore, jazzcore, math-influenced rhythms and free-form experimentation, treated as raw material and recombined into something deliberately unstable.</p>
+        <p>The music can be brutal and abrasive, then suddenly intricate and unexpectedly fluid: heavy riffs collide with fragmented rhythms, chaotic passages give way to strange melodic shapes, structure dissolves into noise and improvisation — never as technical display, but to build tension and keep the listener unsure of where the music is going.</p>
+        <p>The result is a collection of short, intense pieces that refuse to settle into predictable forms — some direct and violent, others abstract and atmospheric, all sharing the same restlessness. This is not music meant to sit comfortably in the background: physical, claustrophobic, disorienting, yet strangely hypnotic.</p>
+        <p>Their first album, Morchia 1, consists of 37 instrumental fragments — 37 small explosions with no conventional narrative or song structure, always avoiding the obvious solution.</p>
+        <p>Morchia Quartet is, above all, an exercise in musical freedom: four anonymous figures, four instruments, and an open space in which almost anything can happen.</p>
+      `,
+      it: `
+        <p>Morchia Quartet è una band immaginaria a quattro elementi, costruita attorno a un'idea semplice: musica senza regole, senza comodità, senza bisogno di spiegarsi. I quattro membri compaiono sempre con il volto coperto da passamontagna neri — nessuna biografia, nessuna storia sulla loro provenienza, nessuna spiegazione su chi siano davvero. Esistono solo attraverso la musica.</p>
+        <p>La formazione è batteria, chitarra, basso e sassofono. Il sassofonista si muove liberamente tra soprano, contralto, tenore e baritono, usando lo strumento tanto come fonte di rumore ed energia fisica quanto come voce melodica — urlando, graffiando, scontrandosi con le chitarre, o dissolvendosi nella sezione ritmica come un altro pezzo di macchinario distorto.</p>
+        <p>Morchia Quartet affonda le radici nella musica sperimentale e nei lati più estremi e non convenzionali di rock, jazz e suono contemporaneo — attingendo dal noise e dal post-hardcore dei primi anni '90, dal jazzcore, da ritmiche math e dalla sperimentazione a briglia sciolta, trattati come materia prima e ricombinati in qualcosa di deliberatamente instabile.</p>
+        <p>La musica può essere brutale e abrasiva, poi improvvisamente intricata e inaspettatamente fluida: riff pesanti si scontrano con ritmiche frammentate, passaggi caotici si aprono a forme melodiche strane, la struttura si dissolve in rumore e improvvisazione — mai come esercizio di stile, ma per creare tensione e tenere chi ascolta incerto su dove la musica stia andando.</p>
+        <p>Il risultato è una raccolta di brani brevi e intensi, che rifiutano di adagiarsi in forme prevedibili — alcuni diretti e violenti, altri astratti e atmosferici, tutti animati dalla stessa inquietudine. Non è musica pensata per stare comoda sullo sfondo: fisica, claustrofobica, disorientante, eppure stranamente ipnotica.</p>
+        <p>Il loro primo album, Morchia 1, è composto da 37 frammenti strumentali — 37 piccole esplosioni senza una narrazione o una struttura convenzionale, sempre alla ricerca di tutto tranne che della soluzione ovvia.</p>
+        <p>Morchia Quartet è, prima di tutto, un esercizio di libertà musicale: quattro figure anonime, quattro strumenti, e uno spazio aperto in cui può succedere quasi tutto.</p>
+      `
+    },
+
+    images: [
+      "morchia-gallery-1.jpg",
+      "morchia-gallery-2.jpg",
+      "morchia-gallery-3.jpg",
+      "morchia-gallery-4.jpg",
+      "morchia-gallery-5.jpg",
+      "morchia-gallery-6.jpg"
+    ],
+
+    youtubePlaylistId: "PLH3P1wMJ7vBg",
+
+    tracks: [
+      { title: "Morchia #1" },
+      { title: "Morchia #2" },
+      { title: "Morchia #5" },
+      { title: "Morchia #8" },
+      { title: "Morchia #9" },
+      { title: "Morchia #10" },
+      { title: "Morchia #17" },
+      { title: "Morchia #19" },
+      { title: "Morchia #22" },
+      { title: "Morchia #23" },
+      { title: "Morchia #25" },
+      { title: "Morchia #27" },
+      { title: "Morchia #28" },
+      { title: "Morchia #29" },
+      { title: "Morchia #30" },
+      { title: "Morchia #31" },
+      { title: "Morchia #32" },
+      { title: "Morchia #33" },
+      { title: "Morchia #34" },
+      { title: "Morchia #35" },
+      { title: "Morchia #36" },
+      { title: "Morchia #37" },
+      { title: "Morchia #38" },
+      { title: "Morchia #39" },
+      { title: "Morchia #40" },
+      { title: "Morchia #41" },
+      { title: "Morchia #43" },
+      { title: "Morchia #45" },
+      { title: "Morchia #46" },
+      { title: "Morchia #47" },
+      { title: "Morchia #51" },
+      { title: "Morchia #53" },
+      { title: "Morchia #54" },
+      { title: "Morchia #55" },
+      { title: "Morchia #56" },
+      { title: "Morchia #57" },
+      { title: "Morchia #58" }
+    ]
+  },
+  {
+    title: "Lorna — \"Insatiable\"",
     genre: "Funk / Rock / Afrobeat",
     cover: "lorna-insatiable.jpg",
 
@@ -130,7 +219,7 @@ const KALOS_WORKS = [
   },
 
   {
-    title: "TUESDAY",
+    title: "\"TUESDAY\"",
     genre: "Avant-garde / Experimental Metal — Theatrical, Grotesque",
     cover: "tuesday-cover.jpg",
 
