@@ -5,6 +5,16 @@
 
 const list = document.getElementById("works-list");
 
+const KALOS_WORK_URLS = {
+  0: { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
+  1: { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
+  2: { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" }
+};
+
+function currentPath() {
+  return window.location.pathname.replace(/^\/+|\/+$/g, "");
+}
+
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -129,7 +139,15 @@ function attachWorkBehaviour() {
 
       current.classList.toggle("open", !isOpen);
       trigger.setAttribute("aria-expanded", String(!isOpen));
-      if (isOpen) stopPlayer(current);
+      if (isOpen) {
+        stopPlayer(current);
+        if (window.location.pathname !== "/works/") history.pushState({}, "", "/works/");
+        clearRoutePresentation();
+      } else {
+        const workIndex = Number(current.dataset.work);
+        const url = KALOS_WORK_URLS[workIndex]?.album;
+        if (url && window.location.pathname !== url) history.pushState({}, "", url);
+      }
     });
   });
 
@@ -322,8 +340,20 @@ function replayLogoAnimation() {
   });
 }
 
+function clearRoutePresentation() {
+  document.querySelectorAll(".work").forEach(el => {
+    el.classList.remove("route-hidden", "artist-profile");
+    const index = Number(el.dataset.work);
+    const heading = el.querySelector(".work-meta h2");
+    if (heading && KALOS_WORKS[index]) heading.textContent = KALOS_WORKS[index].title;
+    const oldLink = el.querySelector(".artist-album-link");
+    if (oldLink) oldLink.remove();
+  });
+}
+
 function setView(view) {
   document.querySelectorAll(".work.open").forEach(workEl => stopPlayer(workEl));
+  clearRoutePresentation();
   body.dataset.view = view;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
   if (view === "home") {
@@ -334,7 +364,10 @@ function setView(view) {
 document.querySelectorAll("[data-target]").forEach(link => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    setView(link.dataset.target);
+    const target = link.dataset.target;
+    setView(target);
+    const url = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/" }[target];
+    if (url && window.location.pathname !== url) history.pushState({}, "", url);
   });
 });
 
@@ -366,43 +399,118 @@ function initStaticLangToggles() {
    to works-data.js gets picked up here too — nothing to maintain by hand. */
 
 function injectStructuredData() {
-  const albums = KALOS_WORKS.map(work => {
-    const parts = work.title.split(" — ");
-    const artistName = parts.length > 1 ? parts[0] : "KALOS";
-    const albumName = (parts.length > 1 ? parts.slice(1).join(" — ") : work.title).replace(/^"+|"+$/g, "").trim();
+  const path = currentPath();
+  const routeToWork = {
+    "works/morchia-quartet/morchia-1": 0,
+    "works/lorna/insatiable": 1,
+    "works/tuesday": 2
+  };
+  const artistRoutes = {
+    "works/morchia-quartet": { name: "Morchia Quartet", image: "morchia-gallery-6.jpg", genre: "Experimental / Noise / Post-Hardcore / Jazzcore", url: "/works/morchia-quartet/" },
+    "works/lorna": { name: "Lorna", image: "lorna-gallery-5.jpg", genre: "Funk / Rock / Afrobeat", url: "/works/lorna/" }
+  };
 
-    return {
+  let data = null;
+  if (Object.prototype.hasOwnProperty.call(routeToWork, path)) {
+    const index = routeToWork[path];
+    const work = KALOS_WORKS[index];
+    const info = KALOS_WORK_URLS[index];
+    data = {
       "@context": "https://schema.org",
       "@type": "MusicAlbum",
-      "name": albumName,
-      "byArtist": {
-        "@type": "MusicGroup",
-        "name": artistName
-      },
+      "name": info.albumName,
+      "byArtist": { "@type": index === 2 ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
       "genre": work.genre,
       "image": `https://kalosmusic.github.io/${work.cover}`,
-      "url": "https://kalosmusic.github.io/#works",
-      "publisher": {
-        "@type": "Organization",
-        "name": "KALOS"
-      },
-      "track": work.tracks.map((track, index) => ({
-        "@type": "MusicRecording",
-        "name": track.title,
-        "position": index + 1
-      }))
+      "url": `https://kalosmusic.github.io${info.album}`,
+      "publisher": { "@type": "Organization", "name": "KALOS", "url": "https://kalosmusic.github.io/" },
+      "track": work.tracks.map((track, i) => ({ "@type": "MusicRecording", "name": track.title, "position": i + 1 }))
     };
-  });
+  } else if (artistRoutes[path]) {
+    const a = artistRoutes[path];
+    data = {
+      "@context": "https://schema.org",
+      "@type": "MusicGroup",
+      "name": a.name,
+      "genre": a.genre,
+      "image": `https://kalosmusic.github.io/${a.image}`,
+      "url": `https://kalosmusic.github.io${a.url}`,
+      "memberOf": { "@type": "Organization", "name": "KALOS", "url": "https://kalosmusic.github.io/" }
+    };
+  }
 
-  albums.forEach(albumData => {
+  if (data) {
     const script = document.createElement("script");
     script.type = "application/ld+json";
-    script.textContent = JSON.stringify(albumData);
+    script.dataset.routeSchema = "true";
+    script.textContent = JSON.stringify(data);
     document.head.appendChild(script);
-  });
+  }
 }
 
 renderWorks();
 initStaticLangToggles();
 injectStructuredData();
-setView("home");
+
+function initRoute() {
+  const path = currentPath();
+  const routeMap = {
+    "": { view: "home" },
+    "who-is-kalos": { view: "who" },
+    "works": { view: "works" },
+    "contacts": { view: "contacts" },
+    "works/lorna": { view: "works", workIndex: 1, artistProfile: true },
+    "works/lorna/insatiable": { view: "works", workIndex: 1 },
+    "works/tuesday": { view: "works", workIndex: 2 },
+    "works/morchia-quartet": { view: "works", workIndex: 0, artistProfile: true },
+    "works/morchia-quartet/morchia-1": { view: "works", workIndex: 0 }
+  };
+  const route = routeMap[path] || { view: "home" };
+  setView(route.view);
+
+  document.querySelectorAll(".work").forEach(el => {
+    el.classList.remove("route-hidden", "artist-profile", "open");
+    const trigger = el.querySelector(".work-trigger");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+    const oldLink = el.querySelector(".artist-album-link");
+    if (oldLink) oldLink.remove();
+  });
+
+  if (Number.isInteger(route.workIndex)) {
+    document.querySelectorAll(".work").forEach(el => {
+      if (Number(el.dataset.work) !== route.workIndex) el.classList.add("route-hidden");
+    });
+    const workEl = document.querySelector(`.work[data-work="${route.workIndex}"]`);
+    if (workEl) {
+      workEl.classList.add("open");
+      const trigger = workEl.querySelector(".work-trigger");
+      if (trigger) trigger.setAttribute("aria-expanded", "true");
+
+      if (route.artistProfile) {
+        workEl.classList.add("artist-profile");
+        const info = KALOS_WORK_URLS[route.workIndex];
+        const heading = workEl.querySelector(".work-meta h2");
+        if (heading && info) heading.textContent = info.artistName;
+        const concept = workEl.querySelector('[data-content="concept"]');
+        if (concept && info?.album) {
+          const link = document.createElement("a");
+          link.className = "artist-album-link";
+          link.href = info.album;
+          link.textContent = `${info.albumName} — album`;
+          concept.appendChild(link);
+        }
+      }
+    }
+  }
+}
+
+window.addEventListener("popstate", initRoute);
+initRoute();
+
+
+/* SEO route URLs: keep the existing app-like navigation while exposing real URLs. */
+const KALOS_VIEW_URLS = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/" };
+document.querySelectorAll("[data-target]").forEach(link => {
+  const url = KALOS_VIEW_URLS[link.dataset.target];
+  if (url) link.setAttribute("href", url);
+});

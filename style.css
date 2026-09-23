@@ -844,3 +844,17 @@ footer a:hover {
 .policy-block code {
   color: var(--accent);
 }
+
+/* Dedicated SEO routes: preserve the existing design while allowing artist/project pages. */
+.work.route-hidden { display: none; }
+.work.artist-profile .work-cover { display: none; }
+.work.artist-profile .tabs { display: none; }
+.work.artist-profile [data-content="audio"] { display: none !important; }
+.work.artist-profile [data-content="concept"] { display: block; }
+.artist-album-link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
