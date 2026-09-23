@@ -131,6 +131,26 @@ body[data-view="cookies"] .view-cookies { display: block !important; }
   100% { opacity: 1; transform: translate(0, 0) scale(1); filter: blur(0); }
 }
 
+.logo-subtitle {
+  margin-top: clamp(14px, 2.2vh, 24px);
+  font-family: "Manrope", Arial, sans-serif;
+  font-size: clamp(14px, 1.45vw, 20px);
+  font-weight: 500;
+  letter-spacing: clamp(.24em, .55vw, .42em);
+  color: var(--gold);
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: subtitle-type 8s steps(19, end) 4s forwards;
+  will-change: clip-path, opacity;
+}
+
+@keyframes subtitle-type {
+  0%   { opacity: 1; clip-path: inset(0 100% 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
 .main-nav {
   display: flex;
   gap: clamp(70px, 14vw, 200px);
@@ -746,6 +766,12 @@ footer a:hover {
 
   .logo-stage {
     width: 82vw;
+  }
+
+  .logo-subtitle {
+    margin-top: 18px;
+    font-size: clamp(13px, 4vw, 17px);
+    letter-spacing: .22em;
   }
 
   @keyframes mark-in {

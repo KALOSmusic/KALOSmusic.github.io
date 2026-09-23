@@ -69,7 +69,7 @@ function renderWorks() {
                 <div class="concept-text active" data-concept-lang="en">${work.concept.en}</div>
                 <div class="concept-text" data-concept-lang="it">${work.concept.it}</div>
 
-                <a class="concept-copyright" href="#legal" data-target="legal">© 2026 KALOS</a>
+                <a class="concept-copyright" href="#legal" data-target="legal">© 2026 Calogero Scafidi — KALOS</a>
               </div>
 
               <div class="tab-content" data-content="audio">
@@ -330,9 +330,10 @@ function stopPlayer(workEl) {
 const body = document.body;
 const logoMark = document.querySelector(".logo-mark");
 const logoWordmark = document.querySelector(".logo-wordmark");
+const logoSubtitle = document.querySelector(".logo-subtitle");
 
 function replayLogoAnimation() {
-  [logoMark, logoWordmark].forEach(el => {
+  [logoMark, logoWordmark, logoSubtitle].forEach(el => {
     if (!el) return;
     el.style.animation = "none";
     void el.offsetWidth;

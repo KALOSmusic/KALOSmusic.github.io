@@ -28,19 +28,46 @@
 <link href="style.css" rel="stylesheet"/>
 <!-- Structured data (schema.org) -->
 <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "KALOS",
-    "url": "https://kalosmusic.github.io/",
-    "logo": "https://kalosmusic.github.io/og-image.jpg",
-    "description": "KALOS is an independent experimental music project exploring avant-garde music, fictional artists, characters and musical worlds.",
-    "email": "KALOS.music@proton.me",
-    "sameAs": [
-      "https://youtube.com/@KALOSmusicproject",
-      "https://facebook.com/KALOSmusicproject"
-    ]
-  }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://kalosmusic.github.io/#kalos",
+      "name": "KALOS",
+      "alternateName": [
+        "KALOS Music Project",
+        "KALOSmusicproject"
+      ],
+      "url": "https://kalosmusic.github.io/",
+      "logo": "https://kalosmusic.github.io/og-image.jpg",
+      "description": "KALOS is an independent experimental music project exploring avant-garde music, fictional artists, characters and musical worlds.",
+      "email": "KALOS.music@proton.me",
+      "founder": {
+        "@id": "https://kalosmusic.github.io/#calogero-scafidi"
+      },
+      "sameAs": [
+        "https://youtube.com/@KALOSmusicproject",
+        "https://facebook.com/KALOSmusicproject"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://kalosmusic.github.io/#calogero-scafidi",
+      "name": "Calogero Scafidi"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kalosmusic.github.io/#website",
+      "url": "https://kalosmusic.github.io/",
+      "name": "KALOS",
+      "alternateName": "KALOS Music Project",
+      "publisher": {
+        "@id": "https://kalosmusic.github.io/#kalos"
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body data-route="contacts" data-view="home">
@@ -50,6 +77,7 @@
 <img alt="" class="logo-mark" src="kalos-mark-transparent.png"/>
 <img alt="KALOS" class="logo-wordmark" src="kalos-wordmark-transparent.png"/>
 </div>
+<div class="logo-subtitle" aria-label="KALOS Music Project">KALOS MUSIC PROJECT</div>
 <nav aria-label="Main navigation" class="main-nav">
 <a data-target="who" href="#who">Who is KALOS</a>
 <a data-target="works" href="#works">Works</a>
@@ -72,7 +100,7 @@
 </article>
 </section>
 <footer class="view view-home">
-<span>© 2026 KALOS</span>
+<span>© 2026 Calogero Scafidi — KALOS</span>
 <a data-target="legal" href="#legal">Legal</a>
 <a data-target="privacy" href="#privacy">Privacy Policy</a>
 <a data-target="cookies" href="#cookies">Cookie Policy</a>
@@ -97,6 +125,7 @@
 <div class="who-grid">
 <h1>An independent experimental music project — a space of research across music, narrative, visual identity and fictional artists.</h1>
 <div class="who-copy">
+<p>KALOS is an independent artistic project conceived and developed by <strong>Calogero Scafidi</strong>.</p>
 <p>KALOS is primarily focused on experimental music, avant-garde approaches and cross-genre exploration, while remaining open to music in many different forms and traditions. Projects can move from funk and rock to extreme metal, from jazz and traditional music to electronic experimentation, or toward softer and more atmospheric sounds.</p>
 <p>The work is driven by a broad interest in music and by the idea that genre does not have to be a creative boundary. Each project can develop its own sound, identity and aesthetic, depending on the idea behind it. A project can begin with a musical intuition, a character, a fictional artist or band, a narrative concept, or an entire imagined world.</p>
 <p>The work then develops through writing, experimentation, artistic direction, AI-assisted music creation, selection and post-production. AI-based tools are used as instruments within the creative process, alongside human decisions, editing and artistic direction.</p>
@@ -112,6 +141,7 @@
 <div class="who-grid">
 <h1>Un progetto artistico indipendente, uno spazio di ricerca tra musica, narrazione, identità visiva e artisti immaginari.</h1>
 <div class="who-copy">
+<p>KALOS è un progetto artistico indipendente ideato e sviluppato da <strong>Calogero Scafidi</strong>.</p>
 <p>Il cuore del progetto è la sperimentazione: approcci d'avanguardia, contaminazioni tra generi, la libertà di muoversi senza etichette fisse — pur restando aperto a ogni forma e tradizione musicale. Un progetto può nascere nel funk o nel rock, spingersi fino al metal più estremo, attingere al jazz o alla musica tradizionale, perdersi nell'elettronica sperimentale, oppure cercare atmosfere più morbide e sospese.</p>
 <p>Alla base c'è la convinzione che il genere non sia un confine, ma solo un punto di partenza: ogni progetto costruisce il proprio suono, la propria identità, la propria estetica, a seconda dell'idea che lo mette in moto. Può nascere da un'intuizione musicale, da un personaggio, da un artista o una band immaginari, da un concept narrativo, o da un intero mondo da inventare.</p>
 <p>Da lì, il lavoro prende forma attraverso scrittura, sperimentazione, direzione artistica, creazione musicale assistita dall'intelligenza artificiale, selezione e post-produzione — strumenti IA usati come parte del processo creativo, sempre dentro decisioni, scelte ed editing umani.</p>
@@ -206,7 +236,7 @@
 <div class="lang-block active legal-block" data-lang-group="legal" data-page-lang="en">
 <div class="legal-entry">
 <h3>Original material</h3>
-<p>Concepts, lyrics, narratives, artistic identities, creative direction and other original material are the work of KALOS, unless otherwise stated.</p>
+<p>Concepts, lyrics, narratives, artistic identities, creative direction and other original material are the work of <strong>Calogero Scafidi, creator of the KALOS project</strong>, unless otherwise stated.</p>
 </div>
 <div class="legal-entry">
 <h3>Music</h3>
@@ -222,13 +252,13 @@
 </div>
 <div class="legal-entry legal-copyright">
 <h3>Copyright</h3>
-<p>© 2026 KALOS — All Rights Reserved.</p>
+<p>© 2026 Calogero Scafidi — KALOS. All Rights Reserved.</p>
 </div>
 </div>
 <div class="lang-block legal-block" data-lang-group="legal" data-page-lang="it">
 <div class="legal-entry">
 <h3>Materiale originale</h3>
-<p>I concept, i testi, le narrazioni, le identità artistiche, le direzioni creative e gli altri materiali originali sono opera di KALOS, salvo diversa indicazione.</p>
+<p>I concept, i testi, le narrazioni, le identità artistiche, le direzioni creative e gli altri materiali originali sono opera di <strong>Calogero Scafidi, ideatore del progetto KALOS</strong>, salvo diversa indicazione.</p>
 </div>
 <div class="legal-entry">
 <h3>Musica</h3>
@@ -244,7 +274,7 @@
 </div>
 <div class="legal-entry legal-copyright">
 <h3>Copyright</h3>
-<p>© 2026 KALOS — All Rights Reserved.</p>
+<p>© 2026 Calogero Scafidi — KALOS. All Rights Reserved.</p>
 </div>
 </div>
 </div>
