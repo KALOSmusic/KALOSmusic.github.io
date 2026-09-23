@@ -137,7 +137,11 @@ body[data-view="cookies"] .view-cookies { display: block !important; }
   font-size: clamp(14px, 1.45vw, 20px);
   font-weight: 500;
   letter-spacing: clamp(.24em, .55vw, .42em);
-  color: var(--gold);
+  color: #666;
+  background: linear-gradient(180deg, #858585 0%, #5e5e5e 42%, #363636 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: center;
   white-space: nowrap;
   opacity: 0;
