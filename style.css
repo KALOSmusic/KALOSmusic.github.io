@@ -142,7 +142,7 @@ body[data-view="cookies"] .view-cookies { display: block !important; }
   white-space: nowrap;
   opacity: 0;
   clip-path: inset(0 100% 0 0);
-  animation: subtitle-type 4s steps(19, end) 3.5s forwards;
+  animation: subtitle-type 4s steps(19, end) 2.6s forwards;
   will-change: clip-path, opacity;
 }
 
