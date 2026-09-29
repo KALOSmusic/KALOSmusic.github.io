@@ -1,0 +1,10 @@
+THE KALOS FILES — FINAL PACKAGE
+
+Contains the complete supplied website snapshot plus only these additions/changes:
+- who-is-kalos/index.html: gold THE KALOS FILES button next to language controls
+- the-kalos-files/: new gallery with 65 photos and 7 approved chapters
+
+To avoid replacing unrelated live changes, if your live site has changed since the supplied full-site ZIP, copy ONLY the who-is-kalos/index.html and the entire the-kalos-files/ folder into your live site. Compare your current Who page first if you have edited it recently.
+
+Photo numbers are the original numbered images; chapters.json preserves the approved sequence.
+No changes have been deployed to GitHub or the live website.
