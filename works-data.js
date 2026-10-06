@@ -20,6 +20,9 @@
 
    CAMPI DI OGNI ALBUM
    --------------------------------
+   slug     → Identificatore tecnico stabile dell'album. Deve essere
+              unico e non va cambiato quando riordini gli album, es.
+              "insatiable", "tuesday", "morchia-1".
    title    → Nome dell'album. Ricordati le virgolette attorno al
               titolo, es. "Lorna — \"Insatiable\"" oppure "\"TUESDAY\""
               (se l'album non ha un nome artista a parte).
@@ -60,6 +63,7 @@
 
 const KALOS_WORKS = [
   {
+    slug: "morchia-1",
     title: "Morchia Quartet — \"Morchia 1\"",
     genre: "Instrumental / Noise / Post-Hardcore / Jazzcore",
     cover: "morchia-1-cover.jpg",
@@ -138,6 +142,7 @@ const KALOS_WORKS = [
     ]
   },
   {
+    slug: "insatiable",
     title: "Lorna — \"Insatiable\"",
     genre: "Funk / Rock / Afrobeat",
     cover: "lorna-insatiable.jpg",
@@ -219,6 +224,7 @@ const KALOS_WORKS = [
   },
 
   {
+    slug: "tuesday",
     title: "\"TUESDAY\"",
     genre: "Avant-garde / Experimental Metal — Theatrical, Grotesque",
     cover: "tuesday-cover.jpg",

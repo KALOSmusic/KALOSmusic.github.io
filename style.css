@@ -276,6 +276,14 @@ footer.view-home {
   font-size: 15px;
 }
 
+.who-copy .who-attribution {
+  margin-top: 26px;
+  color: #77736a;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+
 .who-grid {
   display: grid;
   grid-template-columns: 1.1fr .9fr;

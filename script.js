@@ -6,9 +6,9 @@
 const list = document.getElementById("works-list");
 
 const KALOS_WORK_URLS = {
-  0: { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
-  1: { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
-  2: { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" }
+  "morchia-1": { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
+  "insatiable": { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
+  "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" }
 };
 
 function currentPath() {
@@ -24,7 +24,7 @@ function escapeHtml(str) {
 
 function renderWorks() {
   list.innerHTML = KALOS_WORKS.map((work, wIndex) => `
-    <article class="work" data-work="${wIndex}">
+    <article class="work" data-work="${wIndex}" data-work-slug="${work.slug}">
       <button class="work-trigger" type="button" aria-expanded="false">
         <span>${work.title}</span>
         <span class="symbol">+</span>
@@ -69,7 +69,7 @@ function renderWorks() {
                 <div class="concept-text active" data-concept-lang="en">${work.concept.en}</div>
                 <div class="concept-text" data-concept-lang="it">${work.concept.it}</div>
 
-                <a class="concept-copyright" href="#legal" data-target="legal">© 2026 Calogero Scafidi — KALOS</a>
+                <a class="concept-copyright" href="#legal" data-target="legal">© 2026 KALOS</a>
               </div>
 
               <div class="tab-content" data-content="audio">
@@ -120,7 +120,11 @@ function attachWorkBehaviour() {
   document.querySelectorAll(".work [data-target]").forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      setView(link.dataset.target);
+      const target = link.dataset.target;
+      setView(target);
+      if (target === "legal" && (window.location.pathname !== "/" || window.location.hash !== "#legal")) {
+        history.pushState({}, "", "/#legal");
+      }
     });
   });
 
@@ -144,8 +148,8 @@ function attachWorkBehaviour() {
         if (window.location.pathname !== "/works/") history.pushState({}, "", "/works/");
         clearRoutePresentation();
       } else {
-        const workIndex = Number(current.dataset.work);
-        const url = KALOS_WORK_URLS[workIndex]?.album;
+        const workSlug = current.dataset.workSlug;
+        const url = KALOS_WORK_URLS[workSlug]?.album;
         if (url && window.location.pathname !== url) history.pushState({}, "", url);
       }
     });
@@ -367,8 +371,8 @@ document.querySelectorAll("[data-target]").forEach(link => {
     e.preventDefault();
     const target = link.dataset.target;
     setView(target);
-    const url = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/" }[target];
-    if (url && window.location.pathname !== url) history.pushState({}, "", url);
+    const url = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/", legal: "/#legal" }[target];
+    if (url && `${window.location.pathname}${window.location.hash}` !== url) history.pushState({}, "", url);
   });
 });
 
@@ -402,9 +406,9 @@ function initStaticLangToggles() {
 function injectStructuredData() {
   const path = currentPath();
   const routeToWork = {
-    "works/morchia-quartet/morchia-1": 0,
-    "works/lorna/insatiable": 1,
-    "works/tuesday": 2
+    "works/morchia-quartet/morchia-1": "morchia-1",
+    "works/lorna/insatiable": "insatiable",
+    "works/tuesday": "tuesday"
   };
   const artistRoutes = {
     "works/morchia-quartet": { name: "Morchia Quartet", image: "morchia-gallery-6.jpg", genre: "Experimental / Noise / Post-Hardcore / Jazzcore", url: "/works/morchia-quartet/" },
@@ -413,14 +417,14 @@ function injectStructuredData() {
 
   let data = null;
   if (Object.prototype.hasOwnProperty.call(routeToWork, path)) {
-    const index = routeToWork[path];
-    const work = KALOS_WORKS[index];
-    const info = KALOS_WORK_URLS[index];
+    const slug = routeToWork[path];
+    const work = KALOS_WORKS.find(item => item.slug === slug);
+    const info = KALOS_WORK_URLS[slug];
     data = {
       "@context": "https://schema.org",
       "@type": "MusicAlbum",
       "name": info.albumName,
-      "byArtist": { "@type": index === 2 ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
+      "byArtist": { "@type": slug === "tuesday" ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
       "genre": work.genre,
       "image": `https://kalosmusic.github.io/${work.cover}`,
       "url": `https://kalosmusic.github.io${info.album}`,
@@ -460,13 +464,13 @@ function initRoute() {
     "who-is-kalos": { view: "who" },
     "works": { view: "works" },
     "contacts": { view: "contacts" },
-    "works/lorna": { view: "works", workIndex: 1, artistProfile: true },
-    "works/lorna/insatiable": { view: "works", workIndex: 1 },
-    "works/tuesday": { view: "works", workIndex: 2 },
-    "works/morchia-quartet": { view: "works", workIndex: 0, artistProfile: true },
-    "works/morchia-quartet/morchia-1": { view: "works", workIndex: 0 }
+    "works/lorna": { view: "works", workSlug: "insatiable", artistProfile: true },
+    "works/lorna/insatiable": { view: "works", workSlug: "insatiable" },
+    "works/tuesday": { view: "works", workSlug: "tuesday" },
+    "works/morchia-quartet": { view: "works", workSlug: "morchia-1", artistProfile: true },
+    "works/morchia-quartet/morchia-1": { view: "works", workSlug: "morchia-1" }
   };
-  const route = routeMap[path] || { view: "home" };
+  const route = (window.location.hash === "#legal") ? { view: "legal" } : (routeMap[path] || { view: "home" });
   setView(route.view);
 
   document.querySelectorAll(".work").forEach(el => {
@@ -477,11 +481,11 @@ function initRoute() {
     if (oldLink) oldLink.remove();
   });
 
-  if (Number.isInteger(route.workIndex)) {
+  if (route.workSlug) {
     document.querySelectorAll(".work").forEach(el => {
-      if (Number(el.dataset.work) !== route.workIndex) el.classList.add("route-hidden");
+      if (el.dataset.workSlug !== route.workSlug) el.classList.add("route-hidden");
     });
-    const workEl = document.querySelector(`.work[data-work="${route.workIndex}"]`);
+    const workEl = document.querySelector(`.work[data-work-slug="${route.workSlug}"]`);
     if (workEl) {
       workEl.classList.add("open");
       const trigger = workEl.querySelector(".work-trigger");
@@ -489,7 +493,7 @@ function initRoute() {
 
       if (route.artistProfile) {
         workEl.classList.add("artist-profile");
-        const info = KALOS_WORK_URLS[route.workIndex];
+        const info = KALOS_WORK_URLS[route.workSlug];
         const heading = workEl.querySelector(".work-meta h2");
         if (heading && info) heading.textContent = info.artistName;
         const concept = workEl.querySelector('[data-content="concept"]');
@@ -510,7 +514,7 @@ initRoute();
 
 
 /* SEO route URLs: keep the existing app-like navigation while exposing real URLs. */
-const KALOS_VIEW_URLS = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/" };
+const KALOS_VIEW_URLS = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/", legal: "/#legal" };
 document.querySelectorAll("[data-target]").forEach(link => {
   const url = KALOS_VIEW_URLS[link.dataset.target];
   if (url) link.setAttribute("href", url);
