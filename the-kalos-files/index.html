@@ -1,5 +1,410 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The KALOS Files | KALOS</title><meta name="description" content="Seven chapters. Sixty-five photographs. One unresolved case. Enter THE KALOS FILES, a photographic dossier of experimental music and sonic sabotage."><meta property="og:type" content="website"><meta property="og:site_name" content="KALOS"><meta property="og:title" content="THE KALOS FILES — KALOS"><meta property="og:description" content="Seven chapters. Sixty-five photographs. One unresolved case."><meta property="og:url" content="https://kalosmusic.github.io/the-kalos-files/"><meta property="og:image" content="https://kalosmusic.github.io/the-kalos-files/kalos-files-preview.jpg"><meta property="og:image:secure_url" content="https://kalosmusic.github.io/the-kalos-files/kalos-files-preview.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="KALOS wanted poster, Department of Musical Order"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="THE KALOS FILES — KALOS"><meta name="twitter:description" content="Seven chapters. Sixty-five photographs. One unresolved case."><meta name="twitter:image" content="https://kalosmusic.github.io/the-kalos-files/kalos-files-preview.jpg"><link rel="canonical" href="https://kalosmusic.github.io/the-kalos-files/"><link rel="icon" href="/favicon-32.png"><style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#090909;color:#e9e5dc;font-family:Arial,Helvetica,sans-serif}a{color:#caa65b}.shell{max-width:1040px;margin:auto;padding:24px clamp(16px,4vw,50px) 55px}.back{font-size:12px;letter-spacing:.12em;text-decoration:none}.eyebrow{color:#c49b4d;letter-spacing:.3em;font-size:11px;margin-top:60px}h1{font-size:clamp(34px,7vw,76px);letter-spacing:.08em;margin:12px 0 10px}h2{font-size:clamp(24px,5vw,46px);letter-spacing:.08em}p{line-height:1.65;color:#aaa}.chapter-list{margin-top:48px;border-top:1px solid #51462d}.chapter{width:100%;border:0;border-bottom:1px solid #51462d;background:transparent;color:#e9e5dc;display:flex;gap:25px;align-items:center;text-align:left;padding:24px 10px;cursor:pointer;font-size:clamp(15px,2.5vw,24px);font-weight:700;letter-spacing:.055em}.chapter:hover,.chapter:focus-visible{background:#201b11;color:#eac577}.num{color:#c49b4d;font-size:13px}.arrow{margin-left:auto;color:#c49b4d}button{font:inherit}#viewer[hidden],#index[hidden]{display:none}.viewer-head{margin-top:38px}.photo-frame{margin:24px 0 16px;display:flex;align-items:center;justify-content:center;min-height:220px}.photo-frame img{display:block;max-width:100%;max-height:min(73vh,900px);width:auto;height:auto;object-fit:contain;cursor:zoom-in}.controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 0}.controls button,.all{background:transparent;border:1px solid #806635;color:#e7c37a;padding:13px 18px;cursor:pointer;letter-spacing:.08em}.controls button:disabled{opacity:.25;cursor:default}.controls span{color:#aaa;font-variant-numeric:tabular-nums}.all{margin-top:18px}.fullscreen{background:transparent;border:0;color:#c49b4d;cursor:pointer}.intro{max-width:650px}dialog{border:0;padding:0;background:#000;max-width:100vw;max-height:100vh}dialog img{max-width:100vw;max-height:100vh;object-fit:contain}dialog::backdrop{background:rgba(0,0,0,.95)}dialog button{position:fixed;top:16px;right:16px;background:#c49b4d;border:0;padding:12px 16px;color:#111;cursor:pointer}@media(max-width:500px){.chapter{gap:14px;padding:22px 2px}.controls button{padding:12px}}
-</style></head><body><main class="shell"><a class="back" href="/who-is-kalos/">← WHO IS KALOS</a><section id="index"><div class="eyebrow">CLASSIFIED ARCHIVE</div><h1>THE KALOS FILES</h1><p>Seven chapters. Sixty-five photographs. One unresolved case.</p><div class="chapter-list"></div></section><section id="viewer" hidden><div class="viewer-head"><div class="eyebrow" id="chapter-number"></div><h2 id="chapter-title"></h2><p class="intro" id="chapter-intro"></p></div><figure class="photo-frame"><img id="photo" alt="" decoding="async"><button class="fullscreen" id="zoom" aria-label="View photograph fullscreen">⛶</button></figure><div class="controls"><button id="prev">← PREV</button><span id="counter"></span><button id="next">NEXT →</button></div><button class="all" id="all">← ALL CHAPTERS</button></section></main><dialog id="lightbox"><button id="close" aria-label="Close fullscreen">✕</button><img id="large" alt=""></dialog><script>
-const chapters=[{"title":"THE SUSPECT","images":["images/01.jpg"]},{"title":"DISSECTION","images":["images/07.jpg","images/05.jpg","images/20.jpg","images/22.jpg","images/48.jpg","images/38.jpg","images/65.jpg","images/28.jpg","images/58.jpg","images/27.jpg","images/49.jpg","images/03.jpg","images/08.jpg","images/12.jpg","images/31.jpg","images/14.jpg","images/51.jpg"]},{"title":"FRANKENSTEIN","images":["images/10.jpg","images/57.jpg","images/09.jpg","images/36.jpg","images/34.jpg","images/55.jpg","images/04.jpg","images/26.jpg","images/18.jpg","images/32.jpg","images/30.jpg","images/61.jpg","images/15.jpg","images/42.jpg","images/16.jpg"]},{"title":"SABOTAGE","images":["images/21.jpg","images/40.jpg","images/60.jpg","images/19.jpg","images/41.jpg","images/24.jpg","images/25.jpg","images/47.jpg","images/64.jpg","images/23.jpg","images/35.jpg","images/46.jpg","images/52.jpg","images/62.jpg","images/13.jpg","images/50.jpg","images/06.jpg"]},{"title":"THE PEOPLE VS KALOS","images":["images/59.jpg","images/63.jpg","images/11.jpg","images/29.jpg","images/39.jpg"]},{"title":"IN DEFENCE OF NOISE","images":["images/02.jpg","images/43.jpg","images/17.jpg","images/37.jpg","images/44.jpg","images/54.jpg","images/53.jpg","images/45.jpg","images/56.jpg"]},{"title":"STILL FREE! BEWARE!","images":["images/33.jpg"]}];const photoDescriptions=[["The opening wanted poster introducing KALOS as the suspect. Photograph 1 of 1."],["A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 1 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 2 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 3 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 4 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 5 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 6 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 7 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 8 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 9 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 10 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 11 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 12 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 13 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 14 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 15 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 16 of 17.","A scene from KALOS’s musical-instrument experiments in the laboratory. Photograph 17 of 17."],["A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 1 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 2 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 3 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 4 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 5 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 6 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 7 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 8 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 9 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 10 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 11 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 12 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 13 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 14 of 15.","A scene from KALOS’s Frankenstein experiments and musical creations. Photograph 15 of 15."],["A scene from KALOS’s fictional musical sabotage. Photograph 1 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 2 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 3 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 4 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 5 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 6 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 7 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 8 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 9 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 10 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 11 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 12 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 13 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 14 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 15 of 17.","A scene from KALOS’s fictional musical sabotage. Photograph 16 of 17.","KALOS inside a museum of musical instruments, during the fictional sabotage. Photograph 17 of 17."],["A scene from the fictional trial of KALOS. Photograph 1 of 5.","A scene from the fictional trial of KALOS. Photograph 2 of 5.","A scene from the fictional trial of KALOS. Photograph 3 of 5.","A scene from the fictional trial of KALOS. Photograph 4 of 5.","A scene from the fictional trial of KALOS. Photograph 5 of 5."],["A scene from KALOS’s fictional conference defending noise. Photograph 1 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 2 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 3 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 4 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 5 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 6 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 7 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 8 of 9.","A scene from KALOS’s fictional conference defending noise. Photograph 9 of 9."],["The closing wanted poster: KALOS remains at large. Photograph 1 of 1."]];const intros=["The file opens. The suspect has been identified.", "The instruments enter the laboratory. Nothing leaves unchanged.", "The experiments acquire a life of their own.", "The laboratory doors open. The public becomes the audience.", "The evidence is presented. The defendant has other plans.", "KALOS takes the stage to explain himself. It does not help.", "The case remains open."];let current=-1,pos=0;const el=id=>document.getElementById(id);function showChapter(n,p=0){current=n;pos=p;el('index').hidden=true;el('viewer').hidden=false;el('chapter-number').textContent='CLASSIFIED FILE '+String(n+1).padStart(3,'0');el('chapter-title').textContent=chapters[n].title;el('chapter-intro').textContent=intros[n];showPhoto();history.replaceState(null,'','#chapter-'+(n+1));window.scrollTo(0,0)}function showPhoto(){const imgs=chapters[current].images;el('photo').src=imgs[pos];el('photo').alt=photoDescriptions[current][pos];el('counter').textContent=String(pos+1).padStart(2,'0')+' / '+String(imgs.length).padStart(2,'0');el('prev').disabled=pos===0;el('next').disabled=pos===imgs.length-1;const next=imgs[pos+1];if(next){const pre=new Image();pre.src=next}}function all(){current=-1;el('viewer').hidden=true;el('index').hidden=false;history.replaceState(null,'',location.pathname);window.scrollTo(0,0)}document.querySelector('.chapter-list').innerHTML=chapters.map((c,i)=>'<button type="button" class="chapter" data-chapter="'+i+'"><span class="num">'+String(i+1).padStart(2,'0')+'</span><span>'+c.title+'</span><span class="arrow">→</span></button>').join('');document.querySelectorAll('.chapter').forEach(b=>b.addEventListener('click',()=>showChapter(Number(b.dataset.chapter))));el('prev').onclick=()=>{if(pos>0){pos--;showPhoto()}};el('next').onclick=()=>{if(pos<chapters[current].images.length-1){pos++;showPhoto()}};el('all').onclick=all;el('zoom').onclick=el('photo').onclick=()=>{el('large').src=el('photo').src;el('large').alt=el('photo').alt;el('lightbox').showModal()};el('close').onclick=()=>el('lightbox').close();el('lightbox').addEventListener('click',e=>{if(e.target===el('lightbox'))el('lightbox').close()});document.addEventListener('keydown',e=>{if(current<0||el('lightbox').open)return;if(e.key==='ArrowRight'&&pos<chapters[current].images.length-1){pos++;showPhoto()}if(e.key==='ArrowLeft'&&pos>0){pos--;showPhoto()}if(e.key==='Escape')all()});const m=location.hash.match(/^#chapter-(\d+)$/);if(m&&+m[1]>=1&&+m[1]<=7)showChapter(+m[1]-1);
-</script></body></html>
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<base href="/"/>
+<title>Who is KALOS | KALOS</title>
+<meta content="Discover KALOS, an independent experimental music project exploring avant-garde music, fictional artists, characters and musical worlds." name="description"/>
+<link href="https://kalosmusic.github.io/who-is-kalos/" rel="canonical"/>
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon" sizes="any"/>
+<link href="favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="apple-touch-icon.png" rel="apple-touch-icon"/>
+<!-- Open Graph / social preview -->
+<meta content="website" property="og:type"/>
+<meta content="KALOS" property="og:site_name"/>
+<meta content="Who is KALOS | KALOS" property="og:title"/>
+<meta content="Discover KALOS, an independent experimental music project exploring avant-garde music, fictional artists, characters and musical worlds." property="og:description"/>
+<meta content="https://kalosmusic.github.io/og-image.jpg" property="og:image"/>
+<meta content="https://kalosmusic.github.io/who-is-kalos/" property="og:url"/>
+<!-- Twitter Card -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Who is KALOS | KALOS" name="twitter:title"/>
+<meta content="Discover KALOS, an independent experimental music project exploring avant-garde music, fictional artists, characters and musical worlds." name="twitter:description"/>
+<meta content="https://kalosmusic.github.io/og-image.jpg" name="twitter:image"/>
+<link href="style.css" rel="stylesheet"/>
+<!-- Structured data (schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://kalosmusic.github.io/#kalos",
+      "name": "KALOS",
+      "alternateName": [
+        "KALOS Music Project",
+        "KALOSmusicproject"
+      ],
+      "url": "https://kalosmusic.github.io/",
+      "logo": "https://kalosmusic.github.io/og-image.jpg",
+      "description": "KALOS is an independent experimental music project exploring avant-garde music, fictional artists, characters and musical worlds.",
+      "email": "KALOS.music@proton.me",
+      "founder": {
+        "@id": "https://kalosmusic.github.io/#calogero-scafidi"
+      },
+      "sameAs": [
+        "https://youtube.com/@KALOSmusicproject",
+        "https://facebook.com/KALOSmusicproject"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://kalosmusic.github.io/#calogero-scafidi",
+      "name": "Calogero Scafidi"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kalosmusic.github.io/#website",
+      "url": "https://kalosmusic.github.io/",
+      "name": "KALOS",
+      "alternateName": "KALOS Music Project",
+      "publisher": {
+        "@id": "https://kalosmusic.github.io/#kalos"
+      }
+    }
+  ]
+}
+  </script>
+<style>body[data-route="who-is-kalos"] .lang-toggle[data-lang-toggle="who"]{display:flex;align-items:center;flex-wrap:wrap;gap:10px}body[data-route="who-is-kalos"] .kalos-files-link{display:inline-block;margin-left:clamp(18px,6vw,85px);padding:12px 20px;background:#c49b4d;color:#111;font-size:13px;font-weight:800;letter-spacing:.12em;text-decoration:none;border:1px solid #e5c579;border-radius:3px}body[data-route="who-is-kalos"] .kalos-files-link:hover,body[data-route="who-is-kalos"] .kalos-files-link:focus-visible{background:#e5bd69;outline:2px solid #e5bd69;outline-offset:3px}@media(max-width:540px){body[data-route="who-is-kalos"] .kalos-files-link{margin-left:18px;padding:11px 12px;font-size:11px}}</style></head>
+<body data-route="who-is-kalos" data-view="home">
+<!-- HOME -->
+<header class="hero view view-home" id="home">
+<div aria-label="KALOS" class="logo-stage">
+<img alt="" class="logo-mark" src="kalos-mark-transparent.png"/>
+<img alt="KALOS" class="logo-wordmark" src="kalos-wordmark-transparent.png"/>
+</div>
+<div class="logo-subtitle" aria-label="KALOS Music Project">KALOS MUSIC PROJECT</div>
+<nav aria-label="Main navigation" class="main-nav">
+<a data-target="who" href="#who">Who is KALOS</a>
+<a data-target="works" href="#works">Works</a>
+<a data-target="contacts" href="#contacts">Contacts</a>
+</nav>
+</header>
+<section aria-label="Updates" class="board view view-home">
+<h2 class="board-welcome">Welcome to KALOS world.</h2>
+<article class="board-item">
+<span class="board-tag">Morchia Quartet is here!</span>
+<div class="board-release">
+<div class="board-video">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="https://www.youtube-nocookie.com/embed/s-Z0GNa4O7k" title="Morchia Quartet — Morchia 1"></iframe>
+</div>
+<div class="board-info">
+<h3>Morchia Quartet — "Morchia 1"</h3>
+<div class="genre">Instrumental / Noise / Post-Hardcore / Jazzcore</div>
+</div>
+</div>
+</article>
+</section>
+<footer class="view view-home">
+<span>© 2026 KALOS</span>
+<a data-target="legal" href="#legal">Legal</a>
+<a data-target="privacy" href="#privacy">Privacy Policy</a>
+<a data-target="cookies" href="#cookies">Cookie Policy</a>
+<a data-target="home" href="#home">Back</a>
+</footer>
+<!-- WHO IS KALOS (separate world) -->
+<section class="page view view-who" id="who">
+<div class="subnav">
+<a class="subnav-home" data-target="home" href="#home">KALOS</a>
+<nav aria-label="Section navigation" class="main-nav main-nav--sub">
+<a data-target="works" href="#works">Works</a>
+<a data-target="contacts" href="#contacts">Contacts</a>
+</nav>
+</div>
+<div class="page-inner">
+<div class="section-label">WHO IS KALOS</div>
+<div class="lang-toggle" data-lang-toggle="who">
+<button class="lang-btn active" data-lang="en" type="button">EN</button>
+<button class="lang-btn" data-lang="it" type="button">IT</button>
+<a class="kalos-files-link" href="/the-kalos-files/">THE KALOS FILES ↗</a>
+</div>
+<div class="lang-block active" data-lang-group="who" data-page-lang="en">
+<div class="who-grid">
+<h1>An independent experimental music project — a space of research across music, narrative, visual identity and fictional artists.</h1>
+<div class="who-copy">
+<p>KALOS is primarily focused on experimental music, avant-garde approaches and cross-genre exploration, while remaining open to music in many different forms and traditions. Projects can move from funk and rock to extreme metal, from jazz and traditional music to electronic experimentation, or toward softer and more atmospheric sounds.</p>
+<p>The work is driven by a broad interest in music and by the idea that genre does not have to be a creative boundary. Each project can develop its own sound, identity and aesthetic, depending on the idea behind it. A project can begin with a musical intuition, a character, a fictional artist or band, a narrative concept, or an entire imagined world.</p>
+<p>The work then develops through writing, experimentation, artistic direction, AI-assisted music creation, selection and post-production. AI-based tools are used as instruments within the creative process, alongside human decisions, editing and artistic direction.</p>
+<div class="contact-block">
+<span>COLLABORATIONS</span>
+<p>KALOS is also available for selected commissions, soundtracks and collaborative projects for film, video games, visual projects, documentaries and other creative contexts.</p>
+<a href="mailto:KALOS.music@proton.me">KALOS.music@proton.me</a>
+<p class="who-attribution">KALOS is an independent artistic project conceived and developed by Calogero Scafidi.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lang-block" data-lang-group="who" data-page-lang="it">
+<div class="who-grid">
+<h1>Un progetto artistico indipendente, uno spazio di ricerca tra musica, narrazione, identità visiva e artisti immaginari.</h1>
+<div class="who-copy">
+<p>Il cuore del progetto è la sperimentazione: approcci d'avanguardia, contaminazioni tra generi, la libertà di muoversi senza etichette fisse — pur restando aperto a ogni forma e tradizione musicale. Un progetto può nascere nel funk o nel rock, spingersi fino al metal più estremo, attingere al jazz o alla musica tradizionale, perdersi nell'elettronica sperimentale, oppure cercare atmosfere più morbide e sospese.</p>
+<p>Alla base c'è la convinzione che il genere non sia un confine, ma solo un punto di partenza: ogni progetto costruisce il proprio suono, la propria identità, la propria estetica, a seconda dell'idea che lo mette in moto. Può nascere da un'intuizione musicale, da un personaggio, da un artista o una band immaginari, da un concept narrativo, o da un intero mondo da inventare.</p>
+<p>Da lì, il lavoro prende forma attraverso scrittura, sperimentazione, direzione artistica, creazione musicale assistita dall'intelligenza artificiale, selezione e post-produzione — strumenti IA usati come parte del processo creativo, sempre dentro decisioni, scelte ed editing umani.</p>
+<div class="contact-block">
+<span>COLLABORAZIONI</span>
+<p>KALOS è aperto anche a commissioni selezionate, colonne sonore e collaborazioni — per cinema, videogiochi, progetti visivi, documentari e altri contesti creativi.</p>
+<a href="mailto:KALOS.music@proton.me">KALOS.music@proton.me</a>
+<p class="who-attribution">KALOS è un progetto artistico indipendente ideato e sviluppato da Calogero Scafidi.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- WORKS (separate world) -->
+<section class="page view view-works" id="works">
+<div class="subnav">
+<a class="subnav-home" data-target="home" href="#home">KALOS</a>
+<nav aria-label="Section navigation" class="main-nav main-nav--sub">
+<a data-target="who" href="#who">Who is KALOS</a>
+<a data-target="contacts" href="#contacts">Contacts</a>
+</nav>
+</div>
+<div class="page-inner">
+<div class="section-label">WORKS</div>
+<div class="works-list" id="works-list"></div>
+</div>
+</section>
+<!-- CONTACTS (separate world) -->
+<section class="page view view-contacts" id="contacts">
+<div class="subnav">
+<a class="subnav-home" data-target="home" href="#home">KALOS</a>
+<nav aria-label="Section navigation" class="main-nav main-nav--sub">
+<a data-target="who" href="#who">Who is KALOS</a>
+<a data-target="works" href="#works">Works</a>
+</nav>
+</div>
+<div class="page-inner">
+<div class="section-label">CONTACTS</div>
+<div class="lang-toggle" data-lang-toggle="contacts">
+<button class="lang-btn active" data-lang="en" type="button">EN</button>
+<button class="lang-btn" data-lang="it" type="button">IT</button>
+</div>
+<div class="lang-block active" data-lang-group="contacts" data-page-lang="en">
+<div class="who-grid">
+<h1>Collaborations &amp; commissions.</h1>
+<div class="who-copy">
+<p>KALOS is available for selected commissions and collaborative projects involving original music, sound and musical direction. This can include soundtracks and original music for films, video games, documentaries, visual art, installations, advertising and other creative projects.</p>
+<p>Projects can be approached from different musical directions, from experimental and avant-garde work to more accessible or genre-based music, depending on the needs and identity of the project.</p>
+<p>Each collaboration is developed around the specific project, with attention to its atmosphere, narrative, visual identity and overall artistic direction.</p>
+<div class="contact-block">
+<span>CONTACT</span>
+<a href="mailto:KALOS.music@proton.me">KALOS.music@proton.me</a>
+<a href="https://youtube.com/@KALOSmusicproject" rel="noopener" target="_blank">YouTube ↗</a>
+<a href="https://facebook.com/KALOSmusicproject" rel="noopener" target="_blank">Facebook ↗</a>
+</div>
+</div>
+</div>
+</div>
+<div class="lang-block" data-lang-group="contacts" data-page-lang="it">
+<div class="who-grid">
+<h1>Collaborazioni e commissioni.</h1>
+<div class="who-copy">
+<p>KALOS è disponibile per commissioni e collaborazioni che coinvolgono musica originale, sound design e direzione musicale — colonne sonore e musiche per film, videogiochi, documentari, arte visiva, installazioni, pubblicità e altri progetti creativi.</p>
+<p>Ogni progetto può essere affrontato da angolazioni musicali diverse: dalla sperimentazione più estrema a sonorità più accessibili o legate a un genere preciso, a seconda di ciò che il progetto richiede.</p>
+<p>Ogni collaborazione nasce cucita su misura, con attenzione all'atmosfera, alla narrazione, all'identità visiva e alla direzione artistica del progetto nel suo insieme.</p>
+<div class="contact-block">
+<span>CONTATTI</span>
+<a href="mailto:KALOS.music@proton.me">KALOS.music@proton.me</a>
+<a href="https://youtube.com/@KALOSmusicproject" rel="noopener" target="_blank">YouTube ↗</a>
+<a href="https://facebook.com/KALOSmusicproject" rel="noopener" target="_blank">Facebook ↗</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- LEGAL (separate world) -->
+<section class="page view view-legal" id="legal">
+<div class="subnav">
+<a class="subnav-home" data-target="home" href="#home">KALOS</a>
+<nav aria-label="Section navigation" class="main-nav main-nav--sub">
+<a data-target="who" href="#who">Who is KALOS</a>
+<a data-target="works" href="#works">Works</a>
+</nav>
+</div>
+<div class="page-inner">
+<div class="section-label">LEGAL / RIGHTS / CREDITS</div>
+<div class="lang-toggle" data-lang-toggle="legal">
+<button class="lang-btn active" data-lang="en" type="button">EN</button>
+<button class="lang-btn" data-lang="it" type="button">IT</button>
+</div>
+<div class="lang-block active legal-block" data-lang-group="legal" data-page-lang="en">
+<div class="legal-entry">
+<h3>Original material</h3>
+<p>Concepts, lyrics, narratives, artistic identities, creative direction and other original material are the work of <strong>Calogero Scafidi, creator of the KALOS project</strong>, unless otherwise stated.</p>
+</div>
+<div class="legal-entry">
+<h3>Music</h3>
+<p>The musical works are created through a process that includes ideation, writing, artistic direction, iterative development, selection and post-production, using AI-based music generation tools.</p>
+</div>
+<div class="legal-entry">
+<h3>Visuals</h3>
+<p>Cover artwork and visual elements are the work of KALOS, conceived and produced with the aid of AI-based visual generation tools, unless otherwise stated.</p>
+</div>
+<div class="legal-entry">
+<h3>Third-party material</h3>
+<p>Any third-party material is used in accordance with its respective license or authorization.</p>
+</div>
+<div class="legal-entry legal-copyright">
+<h3>Copyright</h3>
+<p>© 2026 Calogero Scafidi — KALOS. All Rights Reserved.</p>
+</div>
+</div>
+<div class="lang-block legal-block" data-lang-group="legal" data-page-lang="it">
+<div class="legal-entry">
+<h3>Materiale originale</h3>
+<p>I concept, i testi, le narrazioni, le identità artistiche, le direzioni creative e gli altri materiali originali sono opera di <strong>Calogero Scafidi, ideatore del progetto KALOS</strong>, salvo diversa indicazione.</p>
+</div>
+<div class="legal-entry">
+<h3>Musica</h3>
+<p>Le opere musicali sono realizzate attraverso un processo creativo che comprende ideazione, scrittura, direzione artistica, elaborazione iterativa, selezione e post-produzione, con l'utilizzo di strumenti di generazione musicale basati sull'intelligenza artificiale.</p>
+</div>
+<div class="legal-entry">
+<h3>Elementi visivi</h3>
+<p>Le copertine e gli elementi grafici sono opera di KALOS, ideati e realizzati anche con l'ausilio di strumenti di generazione visiva basati sull'intelligenza artificiale, salvo diversa indicazione.</p>
+</div>
+<div class="legal-entry">
+<h3>Materiali di terzi</h3>
+<p>Eventuali materiali appartenenti a terzi sono utilizzati secondo le rispettive licenze o autorizzazioni.</p>
+</div>
+<div class="legal-entry legal-copyright">
+<h3>Copyright</h3>
+<p>© 2026 Calogero Scafidi — KALOS. All Rights Reserved.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- PRIVACY POLICY -->
+<section class="page view view-privacy" id="privacy">
+<div class="subnav">
+<a class="subnav-home" data-target="home" href="#home">KALOS</a>
+<nav aria-label="Section navigation" class="main-nav main-nav--sub">
+<a data-target="works" href="#works">Works</a>
+<a data-target="contacts" href="#contacts">Contacts</a>
+</nav>
+</div>
+<div class="page-inner">
+<div class="section-label">PRIVACY POLICY</div>
+<div class="lang-toggle" data-lang-toggle="privacy">
+<button class="lang-btn active" data-lang="en" type="button">EN</button>
+<button class="lang-btn" data-lang="it" type="button">IT</button>
+</div>
+<div class="lang-block active policy-block" data-lang-group="privacy" data-page-lang="en">
+<p><strong>Last updated: August 2026</strong></p>
+<p>The <strong>KALOS</strong> website (<code>kalosmusic.github.io</code>) is an independent artistic project managed by <strong>Calogero Scafidi</strong>, as data controller for personal data processed through the website.</p>
+<h3>1. What data is processed</h3>
+<p>The website does not require registration, does not provide user accounts, does not use newsletters, advertising systems, or behavioural analytics tools.</p>
+<p>The website may process:</p>
+<ul><li>technical data necessary for the operation and security of the hosting infrastructure;</li><li>personal data voluntarily included in messages sent to the project's contact email address;</li><li>technical data that may be processed by external services used to provide certain website functions, such as the YouTube player.</li></ul>
+<h3>2. Purposes of processing</h3>
+<p>Any data processed may be used solely to:</p>
+<ul><li>ensure the proper operation and security of the website;</li><li>respond to communications voluntarily sent by users;</li><li>make the musical and audiovisual content available through the website.</li></ul>
+<p>The website does <strong>not</strong> use users' data for advertising or profiling purposes.</p>
+<h3>3. Third-party services</h3>
+<p>The website uses <strong>YouTube</strong> to provide playback of musical content.</p>
+<p>Embedded players use, where technically possible, the <code>youtube-nocookie.com</code> domain (YouTube's Privacy Enhanced mode). Interaction with the player may nevertheless involve processing by YouTube in accordance with Google's policies.</p>
+<p>The website is hosted through <strong>GitHub Pages</strong>. The hosting service may process technical connection and access data for purposes related to the operation, security and management of its infrastructure.</p>
+<p>Third-party services are subject to their respective privacy policies.</p>
+<h3>4. Email communications</h3>
+<p>If a user voluntarily contacts KALOS through the email address published on the website, the data contained in the communication will be used solely to manage and respond to the request.</p>
+<p>Such data will not be used for marketing purposes without an appropriate legal basis or consent, where required.</p>
+<h3>5. Data retention</h3>
+<p>Data received by email will be retained for as long as necessary to manage the communication and any resulting relationship, and subsequently deleted when no further legal or operational reason justifies its retention.</p>
+<p>Technical data processed by hosting and third-party services is subject to the retention periods and criteria established by the respective providers.</p>
+<h3>6. Data subject rights</h3>
+<p>Where provided for by applicable law, data subjects may exercise the rights recognised by data protection legislation, including the rights of access, rectification, erasure, restriction of processing and objection, as well as any other rights provided by the GDPR.</p>
+<p>For questions concerning privacy or to exercise applicable rights, contact:</p>
+<p><strong>Calogero Scafidi</strong><br/><strong>Email: KALOS.music@proton.me</strong></p>
+<p>Data subjects also have the right to lodge a complaint with the competent supervisory authority.</p>
+</div>
+<div class="lang-block policy-block" data-lang-group="privacy" data-page-lang="it">
+<p><strong>Ultimo aggiornamento: agosto 2026</strong></p>
+<p>Il sito <strong>KALOS</strong> (<code>kalosmusic.github.io</code>) è un progetto artistico indipendente gestito da <strong>Calogero Scafidi</strong>, in qualità di titolare del trattamento dei dati personali eventualmente trattati attraverso il sito.</p>
+<h3>1. Quali dati vengono trattati</h3>
+<p>Il sito non richiede registrazione, non dispone di account utente, non utilizza newsletter, sistemi pubblicitari o strumenti di analisi del comportamento degli utenti.</p>
+<p>Il sito può trattare:</p>
+<ul><li>dati tecnici necessari al funzionamento e alla sicurezza dell'infrastruttura che ospita il sito;</li><li>eventuali dati personali contenuti nei messaggi inviati volontariamente all'indirizzo email di contatto del progetto;</li><li>dati tecnici eventualmente trattati da servizi esterni utilizzati per fornire alcune funzionalità del sito, come il player YouTube.</li></ul>
+<h3>2. Finalità del trattamento</h3>
+<p>I dati eventualmente trattati possono essere utilizzati esclusivamente per:</p>
+<ul><li>consentire il corretto funzionamento e la sicurezza del sito;</li><li>rispondere alle comunicazioni inviate volontariamente dall'utente;</li><li>rendere disponibili i contenuti audiovisivi e musicali presenti nel sito.</li></ul>
+<p>Il sito <strong>non utilizza i dati degli utenti per finalità pubblicitarie o di profilazione</strong>.</p>
+<h3>3. Servizi di terze parti</h3>
+<p>Il sito utilizza <strong>YouTube</strong> per consentire la riproduzione dei brani musicali.</p>
+<p>I player incorporati utilizzano, ove tecnicamente possibile, il dominio <code>youtube-nocookie.com</code> (modalità Privacy Enhanced di YouTube). L'interazione con il player può comunque comportare il trattamento di dati da parte di YouTube secondo le modalità stabilite da Google.</p>
+<p>Il sito è ospitato tramite <strong>GitHub Pages</strong>. Il servizio di hosting può trattare dati tecnici relativi alle connessioni e agli accessi al sito per finalità connesse al funzionamento, alla sicurezza e alla gestione dell'infrastruttura.</p>
+<p>I servizi di terze parti sono soggetti alle rispettive informative sulla privacy.</p>
+<h3>4. Comunicazioni via email</h3>
+<p>Se l'utente sceglie volontariamente di contattare KALOS tramite l'indirizzo email pubblicato sul sito, i dati contenuti nella comunicazione saranno utilizzati esclusivamente per gestire e rispondere alla richiesta.</p>
+<p>Non saranno utilizzati per finalità di marketing senza una specifica base giuridica o consenso, quando richiesto.</p>
+<h3>5. Conservazione dei dati</h3>
+<p>I dati ricevuti tramite email saranno conservati per il periodo necessario a gestire la comunicazione e gli eventuali rapporti conseguenti, e successivamente cancellati quando non sussistano ulteriori esigenze legali o operative che ne giustifichino la conservazione.</p>
+<p>I dati tecnici eventualmente trattati dai servizi di hosting e di terze parti sono soggetti ai relativi tempi e criteri di conservazione stabiliti dai rispettivi fornitori.</p>
+<h3>6. Diritti dell'interessato</h3>
+<p>Nei casi previsti dalla normativa applicabile, l'interessato può esercitare i diritti riconosciuti dalla normativa sulla protezione dei dati personali, tra cui il diritto di accesso, rettifica, cancellazione, limitazione del trattamento e opposizione, nonché gli altri diritti previsti dal GDPR.</p>
+<p>Per esercitare tali diritti o per qualsiasi domanda relativa alla privacy è possibile contattare:</p>
+<p><strong>Calogero Scafidi</strong><br/><strong>Email: KALOS.music@proton.me</strong></p>
+<p>L'interessato ha inoltre il diritto di proporre reclamo all'autorità di controllo competente.</p>
+</div>
+</div>
+</section>
+<!-- COOKIE POLICY -->
+<section class="page view view-cookies" id="cookies">
+<div class="subnav">
+<a class="subnav-home" data-target="home" href="#home">KALOS</a>
+<nav aria-label="Section navigation" class="main-nav main-nav--sub">
+<a data-target="works" href="#works">Works</a>
+<a data-target="contacts" href="#contacts">Contacts</a>
+</nav>
+</div>
+<div class="page-inner">
+<div class="section-label">COOKIE POLICY</div>
+<div class="lang-toggle" data-lang-toggle="cookies">
+<button class="lang-btn active" data-lang="en" type="button">EN</button>
+<button class="lang-btn" data-lang="it" type="button">IT</button>
+</div>
+<div class="lang-block active policy-block" data-lang-group="cookies" data-page-lang="en">
+<p><strong>Last updated: August 2026</strong></p>
+<p>The <strong>KALOS</strong> website does not use its own profiling cookies, advertising cookies, or tools designed to analyse users' behaviour.</p>
+<h3>1. Technical cookies and website operation</h3>
+<p>The website is implemented as a static website and does not use registration systems, personal accounts, advertising or proprietary profiling tools.</p>
+<p>Technical data necessary for the operation, security and delivery of the website may be processed by the hosting infrastructure used, according to the relevant provider's terms.</p>
+<h3>2. YouTube</h3>
+<p>Musical content is played through embedded players provided by <strong>YouTube</strong>.</p>
+<p>Where technically possible, the players are configured through the <code>youtube-nocookie.com</code> domain, corresponding to YouTube's <strong>Privacy Enhanced</strong> mode.</p>
+<p>Interaction with the YouTube player may nevertheless involve processing of information by YouTube. Such processing is governed by Google's/YouTube's policies and is not directly controlled by KALOS.</p>
+<h3>3. No profiling system</h3>
+<p>KALOS does not use:</p>
+<ul><li>Google Analytics;</li><li>Google Tag Manager;</li><li>Meta Pixel;</li><li>advertising systems;</li><li>profiling systems;</li><li>proprietary tools for tracking users' browsing activity.</li></ul>
+<h3>4. Cookie management</h3>
+<p>As the website does not use its own profiling cookies or equivalent tools for marketing or behavioural analysis, it does not use a consent banner for its own profiling cookies.</p>
+<p>External services used by the website may be subject to their own data and cookie management practices.</p>
+</div>
+<div class="lang-block policy-block" data-lang-group="cookies" data-page-lang="it">
+<p><strong>Ultimo aggiornamento: agosto 2026</strong></p>
+<p>Il sito <strong>KALOS</strong> non utilizza cookie propri di profilazione, cookie pubblicitari o strumenti di analisi del comportamento degli utenti.</p>
+<h3>1. Cookie tecnici e funzionamento del sito</h3>
+<p>Il sito è realizzato come sito web statico e non utilizza sistemi di registrazione, account personali, pubblicità o strumenti proprietari di profilazione.</p>
+<p>Eventuali dati tecnici necessari al funzionamento, alla sicurezza e alla distribuzione del sito possono essere trattati dall'infrastruttura di hosting utilizzata, secondo le modalità stabilite dal relativo fornitore.</p>
+<h3>2. YouTube</h3>
+<p>Per la riproduzione dei contenuti musicali il sito utilizza player incorporati forniti da <strong>YouTube</strong>.</p>
+<p>I player sono configurati, ove tecnicamente possibile, attraverso il dominio <code>youtube-nocookie.com</code>, che corrisponde alla modalità <strong>Privacy Enhanced</strong> messa a disposizione da YouTube.</p>
+<p>L'interazione con il player YouTube può tuttavia comportare il trattamento di informazioni da parte di YouTube. Tali trattamenti sono disciplinati dalle politiche di Google/YouTube e non sono direttamente controllati da KALOS.</p>
+<h3>3. Nessun sistema di profilazione</h3>
+<p>KALOS non utilizza:</p>
+<ul><li>Google Analytics;</li><li>Google Tag Manager;</li><li>Meta Pixel;</li><li>sistemi pubblicitari;</li><li>sistemi di profilazione;</li><li>strumenti proprietari per tracciare la navigazione degli utenti.</li></ul>
+<h3>4. Gestione dei cookie</h3>
+<p>Poiché il sito non utilizza propri cookie di profilazione o strumenti analoghi per finalità di marketing o analisi comportamentale, non viene utilizzato un banner di consenso per cookie di profilazione propri.</p>
+<p>I servizi esterni eventualmente utilizzati dal sito possono essere soggetti alle proprie modalità di gestione dei dati e dei cookie.</p>
+</div>
+</div>
+</section>
+<script src="works-data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
