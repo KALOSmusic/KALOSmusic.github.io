@@ -24,10 +24,15 @@ function escapeHtml(str) {
 }
 
 function renderWorks() {
+  // Real, independently addressable categories. No singles mixed into album list.
+  list.insertAdjacentHTML("beforebegin", `
+    <nav class="works-categories" aria-label="Works categories">
+      <a href="/works/" data-works-category="albums">ALBUMS</a>
+      <a href="/works/singles/" data-works-category="singles">SINGLES</a>
+    </nav>
+  `);
   list.innerHTML = KALOS_WORKS.map((work, wIndex) => `
-    ${wIndex === 0 ? '<h2 class="works-group-title">ALBUMS</h2>' : ''}
-    ${wIndex === KALOS_ALBUMS.length ? '<h2 class="works-group-title">SINGLES</h2>' : ''}
-    <article class="work" data-work="${wIndex}" data-work-slug="${work.slug}">
+    <article class="work" data-work="${wIndex}" data-work-type="${work.type === "single" ? "single" : "album"}" data-work-slug="${work.slug}">
       <button class="work-trigger" type="button" aria-expanded="false">
         <span>${work.title}</span>
         <span class="symbol">+</span>
@@ -133,6 +138,26 @@ function renderWorks() {
   `).join("");
 
   attachWorkBehaviour();
+
+  document.querySelectorAll("[data-works-category]").forEach(link => {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      const url = link.getAttribute("href");
+      if (window.location.pathname !== url) history.pushState({}, "", url);
+      initRoute(); // closes details, resets players and displays only the chosen list
+    });
+  });
+}
+
+function selectWorksCategory(category) {
+  const chosen = category === "singles" ? "singles" : "albums";
+  list.dataset.category = chosen;
+  document.querySelectorAll("[data-works-category]").forEach(link => {
+    const active = link.dataset.worksCategory === chosen;
+    link.classList.toggle("active", active);
+    if (active) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
 }
 
 function attachWorkBehaviour() {
@@ -169,7 +194,8 @@ function attachWorkBehaviour() {
       if (isOpen) {
         stopPlayer(current);
         stopVideo(current);
-        if (window.location.pathname !== "/works/") history.pushState({}, "", "/works/");
+        const listUrl = current.dataset.workType === "single" ? "/works/singles/" : "/works/";
+        if (window.location.pathname !== listUrl) history.pushState({}, "", listUrl);
         clearRoutePresentation();
       } else {
         const workSlug = current.dataset.workSlug;
@@ -455,6 +481,7 @@ document.querySelectorAll("[data-target]").forEach(link => {
     setView(target);
     const url = { home: "/", who: "/who-is-kalos/", works: "/works/", contacts: "/contacts/", legal: "/#legal" }[target];
     if (url && `${window.location.pathname}${window.location.hash}` !== url) history.pushState({}, "", url);
+    if (target === "works") initRoute();
   });
 });
 
@@ -547,7 +574,8 @@ function initRoute() {
   const routeMap = {
     "": { view: "home" },
     "who-is-kalos": { view: "who" },
-    "works": { view: "works" },
+    "works": { view: "works", category: "albums" },
+    "works/singles": { view: "works", category: "singles" },
     "contacts": { view: "contacts" },
     "works/lorna": { view: "works", workSlug: "insatiable", artistProfile: true },
     "works/lorna/insatiable": { view: "works", workSlug: "insatiable" },
@@ -566,6 +594,10 @@ function initRoute() {
     const oldLink = el.querySelector(".artist-album-link");
     if (oldLink) oldLink.remove();
   });
+
+  // Direct links to a single select SINGLES; album routes select ALBUMS.
+  const selectedWork = route.workSlug && KALOS_WORKS.find(work => work.slug === route.workSlug);
+  selectWorksCategory(route.category || (selectedWork?.type === "single" ? "singles" : "albums"));
 
   if (route.workSlug) {
     list.classList.add("is-detail");

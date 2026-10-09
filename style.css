@@ -906,9 +906,32 @@ footer a:hover {
 .board-files-link { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 4px; font-size: 12px; letter-spacing: .17em; text-transform: uppercase; }
 .board-files-link:hover { color: var(--gold-bright); }
 
-/* Works has two categories; both use the original album cards. */
-.works-group-title { font-size: 11px; font-weight: 400; letter-spacing: .28em; color: var(--gold); margin: 0; padding: 38px 0 16px; border-bottom: 1px solid var(--line); }
-.works-list.is-detail .works-group-title { display: none; }
+/* Separate ALBUMS / SINGLES navigation — same understated KALOS style. */
+.works-categories {
+  display: flex;
+  gap: clamp(24px, 5vw, 72px);
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  margin: 12px 0 34px;
+}
+.works-categories a {
+  display: inline-block;
+  padding: 18px 0 16px;
+  border-bottom: 1px solid transparent;
+  color: #888;
+  font-size: 12px;
+  letter-spacing: .24em;
+  transition: color .15s ease, border-color .15s ease;
+}
+.works-categories a:hover,
+.works-categories a.active {
+  color: var(--gold);
+}
+.works-categories a.active { border-bottom-color: var(--gold); }
+.works-list[data-category="albums"] .work[data-work-type="single"],
+.works-list[data-category="singles"] .work[data-work-type="album"] {
+  display: none !important;
+}
 .work-cover--single { aspect-ratio: 1; border: 1px solid #38322b; background: radial-gradient(circle at 28% 30%, #27221f 0, #0c0b0b 48%, #000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; padding: 26px; }
 .work-cover--single > span { color: var(--gold); letter-spacing: .26em; font-size: 10px; }
 .work-cover--single > strong { color: var(--ink); font-family: "Libre Baskerville", Georgia, serif; font-weight: 400; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; overflow-wrap: anywhere; }
