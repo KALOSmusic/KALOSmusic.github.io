@@ -896,3 +896,48 @@ footer a:hover {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+
+/* 2026-10 | Home feature: THE KALOS FILES */
+.board-files-poster { display: block; width: min(100%, 280px); }
+.board-files-poster img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.board-files-questions { color: var(--ink); font-family: "Libre Baskerville", Georgia, serif; font-size: clamp(18px, 2.4vw, 26px); line-height: 1.55; margin: 0 0 25px; }
+.board-files-questions span { display: block; }
+.board-files-link { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 4px; font-size: 12px; letter-spacing: .17em; text-transform: uppercase; }
+.board-files-link:hover { color: var(--gold-bright); }
+
+/* Works has two categories; both use the original album cards. */
+.works-group-title { font-size: 11px; font-weight: 400; letter-spacing: .28em; color: var(--gold); margin: 0; padding: 38px 0 16px; border-bottom: 1px solid var(--line); }
+.works-list.is-detail .works-group-title { display: none; }
+.work-cover--single { aspect-ratio: 1; border: 1px solid #38322b; background: radial-gradient(circle at 28% 30%, #27221f 0, #0c0b0b 48%, #000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; padding: 26px; }
+.work-cover--single > span { color: var(--gold); letter-spacing: .26em; font-size: 10px; }
+.work-cover--single > strong { color: var(--ink); font-family: "Libre Baskerville", Georgia, serif; font-weight: 400; font-size: clamp(28px, 4vw, 44px); text-transform: uppercase; overflow-wrap: anywhere; }
+.work-cover--single > small { color: #777; font-size: 9px; letter-spacing: .23em; }
+.single-links { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 22px; font-size: 11px; letter-spacing: .05em; }
+.single-links a, .single-youtube-link { color: var(--gold); border-bottom: 1px solid #4a4438; padding-bottom: 3px; }
+.single-links a:hover, .single-youtube-link:hover { color: var(--gold-bright); border-color: var(--gold); }
+.single-youtube-link { display: inline-block; font-size: 11px; margin: 0 0 22px; }
+
+/* Morchia video gallery: preview tiles, one embedded player on demand. */
+.video-player { aspect-ratio: 16/9; background: #0a0a0a; border: 1px solid var(--line); margin-bottom: 25px; }
+.video-player[hidden] { display: none !important; }
+.video-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.video-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 15px; }
+.video-choice { appearance: none; display: block; background: none; border: 0; color: var(--ink); text-align: left; padding: 0; cursor: pointer; font: inherit; min-width: 0; }
+.video-choice.active, .video-choice:hover { color: var(--gold); }
+.video-thumb { position: relative; display: block; aspect-ratio: 16/9; overflow: hidden; border: 1px solid var(--line); background: #151515; }
+.video-choice:hover .video-thumb, .video-choice.active .video-thumb { border-color: var(--gold); }
+.video-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.video-play-symbol { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: rgba(0,0,0,.76); border: 1px solid rgba(255,255,255,.6); color: #fff; border-radius: 50%; width: 40px; height: 40px; display: grid; place-items: center; font-size: 13px; padding-left: 3px; }
+.video-name { display: block; margin-top: 10px; font-size: 12px; letter-spacing: .05em; }
+.video-name small { color: var(--gold); letter-spacing: .18em; font-size: 9px; margin-left: 10px; }
+@media (max-width: 520px) {
+  .board-files-poster { max-width: 230px; }
+  .board-files-questions { font-size: 19px; }
+  .video-list { gap: 20px 10px; }
+  .video-play-symbol { width: 32px; height: 32px; }
+}
+
+.video-external { display: inline-block; color: var(--gold); font-size: 11px; margin: 0 0 25px; border-bottom: 1px solid #4a4438; padding-bottom: 3px; }
+.video-external:hover { color: var(--gold-bright); border-color: var(--gold); }
+.video-external[hidden] { display: none !important; }

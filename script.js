@@ -8,7 +8,8 @@ const list = document.getElementById("works-list");
 const KALOS_WORK_URLS = {
   "morchia-1": { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
   "insatiable": { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
-  "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" }
+  "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" },
+  "sugar-static": { artist: null, album: "/works/singles/sugar-static/", artistName: "KALOS", albumName: "Sugar Static" }
 };
 
 function currentPath() {
@@ -24,6 +25,8 @@ function escapeHtml(str) {
 
 function renderWorks() {
   list.innerHTML = KALOS_WORKS.map((work, wIndex) => `
+    ${wIndex === 0 ? '<h2 class="works-group-title">ALBUMS</h2>' : ''}
+    ${wIndex === KALOS_ALBUMS.length ? '<h2 class="works-group-title">SINGLES</h2>' : ''}
     <article class="work" data-work="${wIndex}" data-work-slug="${work.slug}">
       <button class="work-trigger" type="button" aria-expanded="false">
         <span>${work.title}</span>
@@ -32,7 +35,9 @@ function renderWorks() {
       <div class="work-panel">
         <div class="work-panel-inner">
           <div class="work-content">
-            <img class="work-cover" src="${work.cover}" alt="${work.title} cover">
+            ${work.cover
+              ? `<img class="work-cover" src="${work.cover}" alt="${escapeHtml(work.title)} cover">`
+              : `<div class="work-cover work-cover--single" role="img" aria-label="${escapeHtml(work.title)} — KALOS single artwork"><span>KALOS / SINGLE</span><strong>${escapeHtml(work.title)}</strong><small>WRONG FREQUENCY</small></div>`}
             <div class="work-meta">
               <h2>${work.title}</h2>
               <div class="genre">${work.genre}</div>
@@ -40,6 +45,7 @@ function renderWorks() {
               <div class="tabs" role="tablist">
                 <button class="tab active" type="button" data-tab="concept">Concept</button>
                 <button class="tab" type="button" data-tab="audio">Audio</button>
+                ${work.videos?.length ? '<button class="tab" type="button" data-tab="video">Video</button>' : ''}
               </div>
 
               <div class="tab-content active" data-content="concept">
@@ -69,7 +75,8 @@ function renderWorks() {
                 <div class="concept-text active" data-concept-lang="en">${work.concept.en}</div>
                 <div class="concept-text" data-concept-lang="it">${work.concept.it}</div>
 
-                <a class="concept-copyright" href="#legal" data-target="legal">© 2026 KALOS</a>
+                <a class="concept-copyright" href="/#legal" data-target="legal">© 2026 KALOS</a>
+                ${work.type === "single" ? `<div class="single-links"><a href="https://www.youtube.com/watch?v=${work.youtubeVideoId}" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://facebook.com/KALOSmusicproject" target="_blank" rel="noopener noreferrer">Facebook ↗</a><a href="/#legal" data-target="legal">Legal ↗</a></div>` : ''}
               </div>
 
               <div class="tab-content" data-content="audio">
@@ -79,6 +86,7 @@ function renderWorks() {
                   </div>
                   <div class="yt-player-frame" data-player-frame hidden></div>
                 </div>
+                ${work.youtubeVideoId ? `<a class="single-youtube-link" href="https://www.youtube.com/watch?v=${work.youtubeVideoId}" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>` : ''}
                 ${work.tracks.map((track, tIndex) => `
                   <div class="track" data-track-index="${tIndex}">
                     <div class="track-row">
@@ -102,6 +110,20 @@ function renderWorks() {
                   </div>
                 `).join("")}
               </div>
+
+              ${work.videos?.length ? `
+              <div class="tab-content" data-content="video">
+                <div class="video-player" data-video-player hidden></div>
+                <a class="video-external" data-video-external href="#" target="_blank" rel="noopener noreferrer" hidden>Watch on YouTube ↗</a>
+                <div class="video-list">
+                  ${work.videos.map(video => `
+                    <button type="button" class="video-choice" data-video-id="${video.id}" data-video-title="${escapeHtml(video.title)}" aria-label="Play video ${escapeHtml(video.title)}">
+                      <span class="video-thumb"><img src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" loading="lazy" alt="" referrerpolicy="no-referrer"><span aria-hidden="true" class="video-play-symbol">▶</span></span>
+                      <span class="video-name">${escapeHtml(video.title)}${video.short ? '<small>SHORT</small>' : ''}</span>
+                    </button>
+                  `).join("")}
+                </div>
+              </div>` : ''}
 
             </div>
           </div>
@@ -138,6 +160,7 @@ function attachWorkBehaviour() {
           work.classList.remove("open");
           work.querySelector(".work-trigger").setAttribute("aria-expanded", "false");
           stopPlayer(work);
+          stopVideo(work);
         }
       });
 
@@ -145,6 +168,7 @@ function attachWorkBehaviour() {
       trigger.setAttribute("aria-expanded", String(!isOpen));
       if (isOpen) {
         stopPlayer(current);
+        stopVideo(current);
         if (window.location.pathname !== "/works/") history.pushState({}, "", "/works/");
         clearRoutePresentation();
       } else {
@@ -168,6 +192,7 @@ function attachWorkBehaviour() {
         tab.classList.add("active");
         workEl.querySelector(`[data-content="${target}"]`).classList.add("active");
         if (target !== "audio") stopPlayer(workEl);
+        if (target !== "video") stopVideo(workEl);
       });
     });
 
@@ -176,7 +201,35 @@ function attachWorkBehaviour() {
       btn.addEventListener("click", () => {
         const trackEl = btn.closest(".track");
         const tIndex = Number(trackEl.dataset.trackIndex);
+        stopVideo(workEl);
         playTrack(workEl, work, wIndex, tIndex);
+      });
+    });
+
+    // Video gallery: only one player at a time, loaded after an explicit click.
+    workEl.querySelectorAll("[data-video-id]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        stopPlayer(workEl);
+        const player = workEl.querySelector("[data-video-player]");
+        if (!player) return;
+        const videoId = btn.dataset.videoId;
+        player.hidden = false;
+        player.replaceChildren();
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+        iframe.title = btn.dataset.videoTitle;
+        iframe.loading = "lazy";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+        player.appendChild(iframe);
+        const external = workEl.querySelector("[data-video-external]");
+        if (external) {
+          external.href = `https://www.youtube.com/watch?v=${videoId}`;
+          external.hidden = false;
+        }
+        workEl.querySelectorAll(".video-choice").forEach(item => {
+          item.classList.toggle("active", item === btn);
+        });
       });
     });
 
@@ -270,6 +323,20 @@ function playTrack(workEl, work, wIndex, tIndex) {
   workEl.querySelectorAll(".track").forEach(t => t.classList.remove("playing"));
   workEl.querySelector(`.track[data-track-index="${tIndex}"]`).classList.add("playing");
 
+  // Standalone songs use their own video ID: no fake playlist is required.
+  if (work.youtubeVideoId) {
+    frame.hidden = false;
+    placeholder.hidden = true;
+    frame.replaceChildren();
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${work.youtubeVideoId}?autoplay=1`;
+    iframe.title = work.title;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    frame.appendChild(iframe);
+    return;
+  }
+
   const existing = ytPlayers[wIndex];
   if (existing && existing.ready) {
     placeholder.hidden = true;
@@ -323,10 +390,21 @@ function stopPlayer(workEl) {
   if (entry && entry.ready) {
     entry.player.pauseVideo();
   }
+  if (KALOS_WORKS[wIndex]?.youtubeVideoId) frame.replaceChildren();
 
   frame.hidden = true;
   if (placeholder) placeholder.hidden = false;
   workEl.querySelectorAll(".track.playing").forEach(t => t.classList.remove("playing"));
+}
+
+function stopVideo(workEl) {
+  const player = workEl.querySelector("[data-video-player]");
+  if (!player) return;
+  player.replaceChildren(); // removes the iframe and actually stops playback
+  player.hidden = true;
+  const external = workEl.querySelector("[data-video-external]");
+  if (external) external.hidden = true;
+  workEl.querySelectorAll(".video-choice.active").forEach(btn => btn.classList.remove("active"));
 }
 
 /* ===== View switching (Home / Who / Works — separate, non-scrolling worlds) ===== */
@@ -346,6 +424,7 @@ function replayLogoAnimation() {
 }
 
 function clearRoutePresentation() {
+  list.classList.remove("is-detail");
   document.querySelectorAll(".work").forEach(el => {
     el.classList.remove("route-hidden", "artist-profile");
     const index = Number(el.dataset.work);
@@ -357,7 +436,10 @@ function clearRoutePresentation() {
 }
 
 function setView(view) {
-  document.querySelectorAll(".work.open").forEach(workEl => stopPlayer(workEl));
+  document.querySelectorAll(".work.open").forEach(workEl => {
+    stopPlayer(workEl);
+    stopVideo(workEl);
+  });
   clearRoutePresentation();
   body.dataset.view = view;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
@@ -408,7 +490,8 @@ function injectStructuredData() {
   const routeToWork = {
     "works/morchia-quartet/morchia-1": "morchia-1",
     "works/lorna/insatiable": "insatiable",
-    "works/tuesday": "tuesday"
+    "works/tuesday": "tuesday",
+    "works/singles/sugar-static": "sugar-static"
   };
   const artistRoutes = {
     "works/morchia-quartet": { name: "Morchia Quartet", image: "morchia-gallery-6.jpg", genre: "Experimental / Noise / Post-Hardcore / Jazzcore", url: "/works/morchia-quartet/" },
@@ -422,14 +505,16 @@ function injectStructuredData() {
     const info = KALOS_WORK_URLS[slug];
     data = {
       "@context": "https://schema.org",
-      "@type": "MusicAlbum",
+      "@type": work.type === "single" ? "MusicRecording" : "MusicAlbum",
       "name": info.albumName,
-      "byArtist": { "@type": slug === "tuesday" ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
+      "byArtist": { "@type": (slug === "tuesday" || work.type === "single") ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
       "genre": work.genre,
-      "image": `https://kalosmusic.github.io/${work.cover}`,
+      ...(work.cover ? { "image": `https://kalosmusic.github.io/${work.cover}` } : {}),
       "url": `https://kalosmusic.github.io${info.album}`,
+      ...(work.youtubeVideoId ? { "sameAs": `https://www.youtube.com/watch?v=${work.youtubeVideoId}` } : {}),
       "publisher": { "@type": "Organization", "name": "KALOS", "url": "https://kalosmusic.github.io/" },
-      "track": work.tracks.map((track, i) => ({ "@type": "MusicRecording", "name": track.title, "position": i + 1 }))
+      ...(work.type === "single" ? { "lyrics": { "@type": "CreativeWork", "text": work.tracks[0].lyrics } } :
+      { "track": work.tracks.map((track, i) => ({ "@type": "MusicRecording", "name": track.title, "position": i + 1 })) })
     };
   } else if (artistRoutes[path]) {
     const a = artistRoutes[path];
@@ -468,7 +553,8 @@ function initRoute() {
     "works/lorna/insatiable": { view: "works", workSlug: "insatiable" },
     "works/tuesday": { view: "works", workSlug: "tuesday" },
     "works/morchia-quartet": { view: "works", workSlug: "morchia-1", artistProfile: true },
-    "works/morchia-quartet/morchia-1": { view: "works", workSlug: "morchia-1" }
+    "works/morchia-quartet/morchia-1": { view: "works", workSlug: "morchia-1" },
+    "works/singles/sugar-static": { view: "works", workSlug: "sugar-static" }
   };
   const route = (window.location.hash === "#legal") ? { view: "legal" } : (routeMap[path] || { view: "home" });
   setView(route.view);
@@ -482,6 +568,7 @@ function initRoute() {
   });
 
   if (route.workSlug) {
+    list.classList.add("is-detail");
     document.querySelectorAll(".work").forEach(el => {
       if (el.dataset.workSlug !== route.workSlug) el.classList.add("route-hidden");
     });

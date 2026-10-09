@@ -4,9 +4,9 @@
 
    COME AGGIUNGERE UN NUOVO ALBUM
    --------------------------------
-   1. Copia un intero blocco { ... } da qui sotto (da "{" alla
-      "}," che lo chiude), incollalo appena PRIMA della riga
-      "];" in fondo a questo file.
+   1. Copia un intero blocco { ... } tra gli elementi di
+      KALOS_ALBUMS, prima del suo "];" e del blocco KALOS_SINGLES.
+      Non aggiungere album dentro KALOS_SINGLES.
    2. Cambia i valori con quelli del nuovo album.
    3. Carica le immagini (copertina e galleria) nella STESSA
       cartella dove si trovano già index.html e gli altri file
@@ -15,8 +15,9 @@
    4. Salva, carica questo file su GitHub sovrascrivendo quello
       vecchio.
 
-   L'album che metti PIÙ IN ALTO nell'elenco qui sotto sarà il
-   PRIMO a comparire nella pagina "Works".
+   L'album che metti PIÙ IN ALTO in KALOS_ALBUMS sarà il
+   PRIMO a comparire nella sezione ALBUMS di "Works".
+   I singoli sono aggiunti separatamente in KALOS_SINGLES.
 
    CAMPI DI OGNI ALBUM
    --------------------------------
@@ -61,7 +62,7 @@
                        interrompe la riproduzione).
    ============================================================ */
 
-const KALOS_WORKS = [
+const KALOS_ALBUMS = [
   {
     slug: "morchia-1",
     title: "Morchia Quartet — \"Morchia 1\"",
@@ -97,6 +98,13 @@ const KALOS_WORKS = [
       "morchia-gallery-4.jpg",
       "morchia-gallery-5.jpg",
       "morchia-gallery-6.jpg"
+    ],
+
+    videos: [
+      { title: "Morchia #32", id: "I77KfcbkUyQ" },
+      { title: "Morchia #17", id: "FdtE3wfVkzQ" },
+      { title: "Morchia #25", id: "R-kGHEX7tK0", short: true },
+      { title: "Morchia #30", id: "s-Z0GNa4O7k" }
     ],
 
     youtubePlaylistId: "PLH3P1wMJ7vBg",
@@ -307,3 +315,24 @@ const KALOS_WORKS = [
   // e incollalo qui sotto con i nuovi contenuti.
 
 ];
+
+
+/* SINGOLI AUTONOMI — non appartengono agli album.
+   Aggiungi ogni nuovo singolo qui, senza cambiare gli slug esistenti. */
+const KALOS_SINGLES = [
+  {
+    type: "single",
+    slug: "sugar-static",
+    title: "Sugar Static",
+    genre: "Grunge / Noise Rock / Riot Grrrl",
+    youtubeVideoId: "HWpSSLAG1iQ",
+    concept: {
+      en: `<p>Sugar Static draws from the harshest, most abrasive and dissonant side of grunge, and especially from the rebellious attitude of the Riot Grrrl movement. A stream of surreal images, irony and mental short circuits, suspended between noise and disorientation.</p>`,
+      it: `<p>Sugar Static attinge al lato più ostico, abrasivo e dissonante del grunge e soprattutto all'attitudine ribelle del movimento Riot Grrrl. Un flusso di immagini surreali, ironia e cortocircuiti mentali, tra rumore e disorientamento.</p>`
+    },
+    tracks: [ { title: "Sugar Static", lyrics: "I woke up and my head was full of bees\nThe mirror had opinions, I had none\nThe toaster made a face and I agreed\nGood morning to the wall — it said please\n\nEverybody's got a system, everybody's got a plan\nI got a list of seventeen things that start with can\n\nSUGAR STATIC IN MY BRAIN\nCALLING OUT ON THE WRONG FREQUENCY AGAIN\nSUGAR STATIC, SWEET AND STRANGE\nI rearranged the furniture\nI REARRANGED MY NAME\n\nTuesday came in wearing someone else's coat\nThe cat agreed, the clock did not comply\nI boiled the kettle seventeen times\nWROTE IT DOWN AND UNDERLINED THE WHY!\n\n\"This is a public service announcement\nFrom the committee inside my left ear:\"\n\nWE HAVE REACHED A CONSENSUS!\nTHE CONSENSUS\nIS UNCLEAR!!!\n\nSUGAR STATIC IN MY BRAIN\nCALLING OUT ON THE WRONG FREQUENCY AGAIN\nSUGAR STATIC, SWEET AND STRANGE\nI rearranged the furniture\nI REARRANGED MY NAME\n\nThe bees went home, the wall went quiet\nThe mirror cracked — I didn't start it\nI made some tea, I let it be\n\nI let it — I LET IT — I—" } ]
+  }
+];
+
+// Archivio unificato: i brani autonomi vengono dopo tutti gli album.
+const KALOS_WORKS = [...KALOS_ALBUMS, ...KALOS_SINGLES];
