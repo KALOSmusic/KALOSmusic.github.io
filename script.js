@@ -9,7 +9,9 @@ const KALOS_WORK_URLS = {
   "morchia-1": { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
   "insatiable": { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
   "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" },
-  "sugar-static": { artist: null, album: "/works/singles/sugar-static/", artistName: "KALOS", albumName: "Sugar Static" }
+  "sugar-static": { artist: null, album: "/works/singles/sugar-static/", artistName: "KALOS", albumName: "Sugar Static" },
+  "i-dont-do-simple": { artist: null, album: "/works/singles/i-dont-do-simple/", artistName: "KALOS", albumName: "I Don't Do Simple" },
+  "entropia": { artist: null, album: "/works/singles/entropia/", artistName: "KALOS", albumName: "Entropia" }
 };
 
 function currentPath() {
@@ -41,7 +43,7 @@ function renderWorks() {
         <div class="work-panel-inner">
           <div class="work-content">
             ${work.cover
-              ? `<img class="work-cover" src="${work.cover}" alt="${escapeHtml(work.title)} cover">`
+              ? `<img class="work-cover" src="${work.cover}" alt="${escapeHtml(work.title)} cover"${work.type === "single" ? ' loading="lazy" decoding="async"' : ''}>`
               : `<div class="work-cover work-cover--single" role="img" aria-label="${escapeHtml(work.title)} — KALOS single artwork"><span>KALOS / SINGLE</span><strong>${escapeHtml(work.title)}</strong><small>WRONG FREQUENCY</small></div>`}
             <div class="work-meta">
               <h2>${work.title}</h2>
@@ -518,7 +520,9 @@ function injectStructuredData() {
     "works/morchia-quartet/morchia-1": "morchia-1",
     "works/lorna/insatiable": "insatiable",
     "works/tuesday": "tuesday",
-    "works/singles/sugar-static": "sugar-static"
+    "works/singles/sugar-static": "sugar-static",
+    "works/singles/i-dont-do-simple": "i-dont-do-simple",
+    "works/singles/entropia": "entropia"
   };
   const artistRoutes = {
     "works/morchia-quartet": { name: "Morchia Quartet", image: "morchia-gallery-6.jpg", genre: "Experimental / Noise / Post-Hardcore / Jazzcore", url: "/works/morchia-quartet/" },
@@ -582,7 +586,9 @@ function initRoute() {
     "works/tuesday": { view: "works", workSlug: "tuesday" },
     "works/morchia-quartet": { view: "works", workSlug: "morchia-1", artistProfile: true },
     "works/morchia-quartet/morchia-1": { view: "works", workSlug: "morchia-1" },
-    "works/singles/sugar-static": { view: "works", workSlug: "sugar-static" }
+    "works/singles/sugar-static": { view: "works", workSlug: "sugar-static" },
+    "works/singles/i-dont-do-simple": { view: "works", workSlug: "i-dont-do-simple" },
+    "works/singles/entropia": { view: "works", workSlug: "entropia" }
   };
   const route = (window.location.hash === "#legal") ? { view: "legal" } : (routeMap[path] || { view: "home" });
   setView(route.view);

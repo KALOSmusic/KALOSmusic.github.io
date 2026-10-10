@@ -324,6 +324,7 @@ const KALOS_SINGLES = [
     type: "single",
     slug: "sugar-static",
     title: "Sugar Static",
+    cover: "works/singles/sugar-static.webp",
     genre: "Grunge / Noise Rock / Riot Grrrl",
     youtubeVideoId: "HWpSSLAG1iQ",
     concept: {
@@ -331,6 +332,32 @@ const KALOS_SINGLES = [
       it: `<p>Sugar Static attinge al lato più ostico, abrasivo e dissonante del grunge e soprattutto all'attitudine ribelle del movimento Riot Grrrl. Un flusso di immagini surreali, ironia e cortocircuiti mentali, tra rumore e disorientamento.</p>`
     },
     tracks: [ { title: "Sugar Static", lyrics: "I woke up and my head was full of bees\nThe mirror had opinions, I had none\nThe toaster made a face and I agreed\nGood morning to the wall — it said please\n\nEverybody's got a system, everybody's got a plan\nI got a list of seventeen things that start with can\n\nSUGAR STATIC IN MY BRAIN\nCALLING OUT ON THE WRONG FREQUENCY AGAIN\nSUGAR STATIC, SWEET AND STRANGE\nI rearranged the furniture\nI REARRANGED MY NAME\n\nTuesday came in wearing someone else's coat\nThe cat agreed, the clock did not comply\nI boiled the kettle seventeen times\nWROTE IT DOWN AND UNDERLINED THE WHY!\n\n\"This is a public service announcement\nFrom the committee inside my left ear:\"\n\nWE HAVE REACHED A CONSENSUS!\nTHE CONSENSUS\nIS UNCLEAR!!!\n\nSUGAR STATIC IN MY BRAIN\nCALLING OUT ON THE WRONG FREQUENCY AGAIN\nSUGAR STATIC, SWEET AND STRANGE\nI rearranged the furniture\nI REARRANGED MY NAME\n\nThe bees went home, the wall went quiet\nThe mirror cracked — I didn't start it\nI made some tea, I let it be\n\nI let it — I LET IT — I—" } ]
+  },
+  {
+    type: "single",
+    slug: "i-dont-do-simple",
+    title: "I Don't Do Simple",
+    genre: "Experimental Rock / Alternative Rock / Art Rock",
+    cover: "works/singles/i-dont-do-simple.webp",
+    youtubeVideoId: "q7nrULDx3BE",
+    concept: {
+      en: `<p>A sonic collage driven by an infectious groove, punctuated by constant rhythmic shifts, changes in atmosphere, and eccentric vocal performances.</p><p>Energy, experimentation, and irony, held in an unstable balance between immediacy and unpredictability.</p>`,
+      it: `<p>Un collage sonoro dal groove contagioso, attraversato da continue mutazioni ritmiche, cambi di atmosfera e interpretazioni vocali eccentriche.</p><p>Energia, sperimentazione e ironia, in equilibrio instabile tra immediatezza e imprevedibilità.</p>`
+    },
+    tracks: [ { title: "I Don't Do Simple", lyrics: "They hired me at the Simplicity Department\nto approve what made sense\nand reject what moved too much\nthey said music should behave\n\nI signed the paper\nwithout reading the organ clause\nFirst day I checked the system\neverything clean, everything flat\n\nthen I saw the organ\nnot registered anywhere\nit played one note\nand the filing cabinets answered back\n\nmy supervisor said\n\"that is not an approved reaction\"\n\n\nI don't do simple\nI don't do clean\nI break what they told me music should mean\nI don't do soft\nI don't do straight\nI make the system hesitate\n\n\nthey installed a limiter\nfor emotional content\nI bypassed it with rhythm\nthey forgot rhythm exists\n\nthe organ started laughing\nin three different keys\nthey called it malfunction\nI called it improvement\n\nmy supervisor tried to restore order\nhe played a perfect chord\nnothing reacted\nI hit it wrong on purpose\nand the building finally woke up\n\nrulebook says\n\"simplicity is mandatory\"\nthe organ disagreed\npolitely at first\nthen louder\n\n\nI don't do simple\nI don't do clean\nI break what they told me music should mean\nI don't do soft\nI don't do straight\nI make the system hesitate\n\n\nand the system\nstopped asking questions" } ]
+  },
+  {
+    type: "single",
+    slug: "entropia",
+    title: "Entropia",
+    genre: "Noise / Electroacoustic / Experimental Industrial",
+    cover: "works/singles/entropia.webp",
+    youtubeVideoId: "a2bb5sYnRWg",
+    concept: {
+      en: `<p>A violent and claustrophobic experimental electronic piece, built from industrial noise, radio interference, distorted sonic materials, unstable mechanical rhythms, and a deep, degraded, almost dehumanized voice.</p><p>Sound as matter subjected to pressure, pushed toward saturation.</p>`,
+      it: `<p>Un'esperienza di elettronica sperimentale violenta e claustrofobica, costruita attraverso rumori industriali, interferenze radio, materiali sonori distorti, ritmi meccanici instabili e una voce profonda, degradata e quasi disumanizzata.</p><p>Il suono come materia sottoposta a pressione, fino alla saturazione.</p>`
+    },
+    tracks: [ { title: "Entropia", lyrics: "L’esistenza si mantiene riducendo gradualmente l’intensità delle aspettative.\n\nLa durata sostituisce progressivamente il significato come unico criterio di persistenza.\n\nIl futuro si riduce a una proiezione statistica di ciò che già accade.\n\nIl presente funziona come superficie di contatto tra residui e attese non realizzate.\n\nIl passato non viene superato ma incorporato come carico permanente.\n\nLa memoria diventa un deposito di eventi non risolti, sospesi senza conclusione.\n\n\nIl tempo non interviene per correggere ma per rendere permanenti le deviazioni accumulate.\n\n\nIl tempo non seleziona ciò che è migliore, ma ciò che resiste più a lungo.\n\nIl tempo non seleziona ciò che è migliore, ma ciò che resiste più a lungo.\n\nIl tempo non seleziona ciò che è migliore, ma ciò che resiste più a lungo." } ]
   }
 ];
 
