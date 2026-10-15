@@ -64,6 +64,81 @@
 
 const KALOS_ALBUMS = [
   {
+    slug: "interferences",
+    title: '"Interferences"',
+    genre: "Experimental Electronic / Electroacoustic / Noise / Glitch",
+    cover: "interferences-cover.webp",
+    instrumental: true,
+    concept: {
+      en: `
+        <p>INTERFERENCES is an experimental electronic music project that investigates the unstable boundary between noise, organized sound, and music.</p>
+        <p>The starting question is only apparently simple: when does chaos cease to be merely chaos? When does an arrangement of sonic events begin to reveal a structure? And when is that structure perceived as music?</p>
+        <p>The project treats sound as unstable, transformable matter. Its starting point is not traditional instrumental composition, but the possibility of using impulses, noises, disturbances, and phenomena seemingly foreign to music as compositional elements.</p>
+        <p>Electrical discharges, electromagnetic interference, relay clicks, transformer hum, mechanical noises, sampled sounds, textures obtained or imitated through contact microphones, digital artifacts, bitcrush, granular processes, signal fragments, system errors, and deformed physical materials form a deliberately unstable, rough, and constantly changing sonic vocabulary.</p>
+        <p>A central part of this investigation concerns rhythm.</p>
+        <p>This is not a search <strong>for rhythm</strong>, understood as the systematic pursuit of a steady pulse or beat, but an investigation <strong>into rhythm</strong>.</p>
+        <p>In INTERFERENCES, rhythm has no fixed status: it may be entirely absent, arise accidentally from the collision of independent sonic events, temporarily stabilize, transform, dissolve, or suddenly become central. In some cases, fragments initially lacking any obvious pulse end up synchronizing and producing a physical, irregular groove; in others, any notion of groove is deliberately excluded, and the work focuses instead on mathematical matrices, repetitions, chance processes, accumulations, densities, microscopic variations, and relationships between events without a traditional rhythmic hierarchy.</p>
+        <p>The concept of INTERFERENCES arises precisely from this instability.</p>
+        <p>Interference is not simply an aesthetic effect applied to music, but a rule governing the system’s behavior. Signals disrupting one another, structures overlapping, repetitions producing differences, errors becoming information, and chance phenomena capable of generating unforeseen configurations: what would normally be discarded as noise, malfunction, or imperfection becomes the very material of composition. The system may seek equilibrium, reject it entirely, or produce it by chance; in every case, that stability remains fragile and reversible.</p>
+        <p>In timbral terms, the project brings together musique concrète, electroacoustic sound art, glitch, noise, digital micro-editing, and extreme processing of sonic material.</p>
+        <p>The physical dimension remains central even when the source is electronic: friction, pressure, impact, saturation, discharge, vibration, clipping, and deterioration are conceived as perceptual qualities before they are considered techniques.</p>
+        <p>The contrast between microscopic precision and brutality, between organization and chance, between claustrophobic density and emptiness, between repetition and continuous mutation, is an essential part of the work’s identity.</p>
+        <p>INTERFERENCES does not follow a linear narrative or propose a single rhythmic grammar. Rather, it explores an artificial sonic environment in which physical matter, electricity, noise, and digital corruption can behave like components of an unstable organism.</p>
+        <p>At times these elements converge and produce a structure; at others they remain dispersed, or organize themselves according to mathematical, iterative, or random processes without turning into a recognizable rhythm.</p>
+        <p>The investigation takes place precisely at this boundary: observing what happens when chaos acquires a structure, when structure becomes organized sound, when sound is perceived as music, and when that order dissolves once again.</p>
+        <p>In INTERFERENCES, order and disorder are not opposites, but temporary states of the same system.</p>
+      `,
+      it: `
+        <p>INTERFERENCES è un progetto di musica elettronica sperimentale che indaga il confine instabile tra rumore, suono organizzato e musica.</p>
+        <p>La domanda di partenza è semplice solo in apparenza: quando il caos smette di essere soltanto caos? Quando una disposizione di eventi sonori comincia a manifestare una struttura? E quando quella struttura viene percepita come musica?</p>
+        <p>Il progetto tratta il suono come materia instabile e trasformabile. Il punto di partenza non è la scrittura strumentale tradizionale, ma la possibilità di utilizzare impulsi, rumori, disturbi e fenomeni apparentemente estranei alla musica come elementi compositivi.</p>
+        <p>Scariche elettriche, interferenze elettromagnetiche, click di relè, ronzii di trasformatori, rumori meccanici, suoni campionati, texture ottenute o imitate attraverso microfoni a contatto, artefatti digitali, bitcrush, processi granulari, frammenti di segnale, errori di sistema e materiali fisici deformati costituiscono un vocabolario sonoro volutamente instabile, ruvido e mutevole.</p>
+        <p>Una parte centrale della ricerca riguarda il ritmo.</p>
+        <p>Non si tratta di una ricerca <strong>del ritmo</strong>, intesa come ricerca sistematica di una pulsazione stabile o di un beat, ma di una ricerca <strong>sul ritmo</strong>.</p>
+        <p>In INTERFERENCES il ritmo non possiede uno statuto fisso: può essere completamente assente, emergere per accidente dalla collisione tra eventi sonori indipendenti, stabilizzarsi temporaneamente, trasformarsi, dissolversi oppure diventare improvvisamente centrale. In alcuni casi, frammenti inizialmente privi di una pulsazione evidente finiscono per sincronizzarsi e produrre un groove fisico e irregolare; in altri, qualsiasi idea di groove viene deliberatamente esclusa e il lavoro si concentra su matrici matematiche, ripetizioni, processi casuali, accumulazioni, densità, variazioni microscopiche e relazioni tra eventi prive di una gerarchia ritmica tradizionale.</p>
+        <p>Il concetto di INTERFERENCES nasce proprio da questa instabilità.</p>
+        <p>L’interferenza non è un semplice effetto estetico applicato alla musica, ma una regola di comportamento del sistema. Segnali che si disturbano, strutture che si sovrappongono, ripetizioni che producono differenze, errori che diventano informazioni e fenomeni casuali che possono generare configurazioni impreviste: ciò che normalmente verrebbe eliminato come rumore, guasto o imperfezione diventa il materiale stesso della composizione. Il sistema può cercare un equilibrio, rifiutarlo completamente oppure produrlo per caso; in ogni caso, quella stabilità resta fragile e reversibile.</p>
+        <p>Sul piano timbrico il progetto mette in relazione musique concrète, sound art elettroacustica, glitch, noise, micro-editing digitale e trattamento estremo del materiale sonoro.</p>
+        <p>La componente fisica rimane centrale anche quando la sorgente è elettronica: attrito, pressione, urto, saturazione, scarica, vibrazione, clipping e deterioramento vengono pensati come qualità percettive prima ancora che come tecniche.</p>
+        <p>Il contrasto tra precisione microscopica e brutalità, tra organizzazione e casualità, tra densità claustrofobica e vuoto, tra ripetizione e mutazione continua costituisce una parte essenziale dell’identità del lavoro.</p>
+        <p>INTERFERENCES non segue una narrazione lineare e non propone un’unica grammatica ritmica. È piuttosto l’esplorazione di un ambiente sonoro artificiale nel quale materia fisica, elettricità, rumore e corruzione digitale possono comportarsi come componenti di un organismo instabile.</p>
+        <p>A volte questi elementi convergono e producono una struttura; altre volte rimangono dispersi, oppure si organizzano secondo logiche matematiche, iterative o casuali senza trasformarsi in un ritmo riconoscibile.</p>
+        <p>La ricerca si colloca precisamente in questa zona di confine: osservare che cosa accade quando il caos acquisisce una struttura, quando la struttura diventa suono organizzato, quando il suono viene percepito come musica e quando quell’ordine torna nuovamente a dissolversi.</p>
+        <p>In INTERFERENCES, ordine e disordine non sono opposti, ma stati temporanei dello stesso sistema.</p>
+      `
+    },
+    images: ["interferences-back.webp"],
+    youtubePlaylistId: "PLNX9n-WmyE6M",
+    tracks: [
+      { title: "Ready? Go!" },
+      { title: "Blackout" },
+      { title: "Broken" },
+      { title: "Buried Melody" },
+      { title: "Corrupted" },
+      { title: "Crack" },
+      { title: "Decay" },
+      { title: "Discharge" },
+      { title: "Electrical Storm" },
+      { title: "Failed" },
+      { title: "Flatline" },
+      { title: "Fracture" },
+      { title: "Hard Cut" },
+      { title: "Malfunction" },
+      { title: "Noise Gate" },
+      { title: "Overwrite" },
+      { title: "Pulse" },
+      { title: "Quantic in the Static" },
+      { title: "Residual" },
+      { title: "Rupture" },
+      { title: "Saturation" },
+      { title: "Static Field" },
+      { title: "Surge" },
+      { title: "System Overload" },
+      { title: "Void" },
+      { title: "Greetings From Planet KALOS" }
+    ]
+  },
+  {
     slug: "morchia-1",
     title: "Morchia Quartet — \"Morchia 1\"",
     genre: "Instrumental / Noise / Post-Hardcore / Jazzcore",

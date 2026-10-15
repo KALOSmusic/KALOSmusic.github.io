@@ -6,6 +6,7 @@
 const list = document.getElementById("works-list");
 
 const KALOS_WORK_URLS = {
+  "interferences": { artist: null, album: "/works/interferences/", artistName: "KALOS", albumName: "Interferences" },
   "morchia-1": { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
   "insatiable": { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
   "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" },
@@ -520,6 +521,7 @@ function injectStructuredData() {
     "works/morchia-quartet/morchia-1": "morchia-1",
     "works/lorna/insatiable": "insatiable",
     "works/tuesday": "tuesday",
+    "works/interferences": "interferences",
     "works/singles/sugar-static": "sugar-static",
     "works/singles/i-dont-do-simple": "i-dont-do-simple",
     "works/singles/entropia": "entropia"
@@ -538,7 +540,7 @@ function injectStructuredData() {
       "@context": "https://schema.org",
       "@type": work.type === "single" ? "MusicRecording" : "MusicAlbum",
       "name": info.albumName,
-      "byArtist": { "@type": (slug === "tuesday" || work.type === "single") ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
+      "byArtist": { "@type": ((slug === "tuesday" || slug === "interferences") || work.type === "single") ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
       "genre": work.genre,
       ...(work.cover ? { "image": `https://kalosmusic.github.io/${work.cover}` } : {}),
       "url": `https://kalosmusic.github.io${info.album}`,
@@ -584,6 +586,7 @@ function initRoute() {
     "works/lorna": { view: "works", workSlug: "insatiable", artistProfile: true },
     "works/lorna/insatiable": { view: "works", workSlug: "insatiable" },
     "works/tuesday": { view: "works", workSlug: "tuesday" },
+    "works/interferences": { view: "works", workSlug: "interferences" },
     "works/morchia-quartet": { view: "works", workSlug: "morchia-1", artistProfile: true },
     "works/morchia-quartet/morchia-1": { view: "works", workSlug: "morchia-1" },
     "works/singles/sugar-static": { view: "works", workSlug: "sugar-static" },
