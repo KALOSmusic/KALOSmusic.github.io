@@ -394,6 +394,42 @@ const KALOS_ALBUMS = [
 
 /* SINGOLI AUTONOMI — non appartengono agli album.
    Aggiungi ogni nuovo singolo qui, senza cambiare gli slug esistenti. */
+
+const KALOS_FUN = [
+  {
+    slug: "grave-diggers-jamboree",
+    category: "fun",
+    title: "Grave-Diggers' Jamboree",
+    genre: "Psychobilly / Halloween",
+    cover: "grave-diggers-jamboree.webp",
+    instrumental: true,
+    youtubePlaylistId: "PLEjcVQt0P09M",
+    concept: {
+      en: `
+        <p>Nine tracks of wild psychobilly, created for Halloween.</p>
+        <p>A no-frills, high-energy collection, packed with frantic rhythms, twisted characters and dark party fun.</p>
+        <p>No big concepts. No deep meanings. Just music to raise hell and shake your bones.</p>
+      `,
+      it: `
+        <p>Nove brani psychobilly scatenati, creati per Halloween.</p>
+        <p>Una raccolta senza fronzoli, ad alta energia, fatta di ritmi frenetici, personaggi strampalati e divertimento dalle tinte oscure.</p>
+        <p>Nessun grande concept. Nessun significato profondo. Solo musica per scatenare l'inferno e far ballare anche le ossa.</p>
+      `
+    },
+    tracks: [
+      { title: "Zombie Witch", lyrics: "" },
+      { title: "Sad Little Werewolf", lyrics: "" },
+      { title: "Graveyard Stomp", lyrics: "" },
+      { title: "Unwrap The Mummy", lyrics: "" },
+      { title: "Vampire With A Rotten Tooth", lyrics: "" },
+      { title: "Zom-Bom-Bie Witch", lyrics: "" },
+      { title: "Ghost With Hemorrhoids", lyrics: "" },
+      { title: "Skeleton Dance", lyrics: "" },
+      { title: "Grave-Diggers' Jamboree", lyrics: "" }
+    ]
+  }
+];
+
 const KALOS_SINGLES = [
   {
     type: "single",
@@ -437,4 +473,4 @@ const KALOS_SINGLES = [
 ];
 
 // Archivio unificato: i brani autonomi vengono dopo tutti gli album.
-const KALOS_WORKS = [...KALOS_ALBUMS, ...KALOS_SINGLES];
+const KALOS_WORKS = [...KALOS_ALBUMS, ...KALOS_FUN, ...KALOS_SINGLES];

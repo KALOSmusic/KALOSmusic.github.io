@@ -56,6 +56,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kalosmusic.github.io/works/fun/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kalosmusic.github.io/works/fun/grave-diggers-jamboree/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kalosmusic.github.io/works/singles/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

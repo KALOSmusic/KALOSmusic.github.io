@@ -906,17 +906,18 @@ footer a:hover {
 .board-files-link { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 4px; font-size: 12px; letter-spacing: .17em; text-transform: uppercase; }
 .board-files-link:hover { color: var(--gold-bright); }
 
-/* Separate ALBUMS / SINGLES navigation — same understated KALOS style. */
+/* ALBUMS / SINGLES / FUN navigation — three equal sections. */
 .works-categories {
-  display: flex;
-  gap: clamp(24px, 5vw, 72px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
   border-bottom: 1px solid var(--line);
   margin: 12px 0 34px;
 }
 .works-categories a {
-  display: inline-block;
-  padding: 18px 0 16px;
+  display: block;
+  text-align: center;
+  padding: 18px 8px 16px;
   border-bottom: 1px solid transparent;
   color: #888;
   font-size: 12px;
@@ -928,8 +929,9 @@ footer a:hover {
   color: var(--gold);
 }
 .works-categories a.active { border-bottom-color: var(--gold); }
-.works-list[data-category="albums"] .work[data-work-type="single"],
-.works-list[data-category="singles"] .work[data-work-type="album"] {
+.works-list[data-category="albums"] .work[data-work-category]:not([data-work-category="albums"]),
+.works-list[data-category="singles"] .work[data-work-category]:not([data-work-category="singles"]),
+.works-list[data-category="fun"] .work[data-work-category]:not([data-work-category="fun"]) {
   display: none !important;
 }
 .work-cover--single { aspect-ratio: 1; border: 1px solid #38322b; background: radial-gradient(circle at 28% 30%, #27221f 0, #0c0b0b 48%, #000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; padding: 26px; }
@@ -964,3 +966,23 @@ footer a:hover {
 .video-external { display: inline-block; color: var(--gold); font-size: 11px; margin: 0 0 25px; border-bottom: 1px solid #4a4438; padding-bottom: 3px; }
 .video-external:hover { color: var(--gold-bright); border-color: var(--gold); }
 .video-external[hidden] { display: none !important; }
+
+
+/* IAIMA invited-artist feature on the home page. */
+.board-iaima-poster { display: block; width: min(100%, 280px); }
+.board-iaima-poster img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.board-iaima-copy h3 { margin: 0 0 18px; color: var(--ink); font-family: "Libre Baskerville", Georgia, serif; font-size: clamp(20px, 2.5vw, 28px); font-weight: 400; line-height: 1.35; }
+.board-iaima-copy p { color: #aaa; font-size: 14px; line-height: 1.8; margin: 0 0 14px; }
+.board-iaima-copy strong { color: var(--ink); }
+.board-iaima-copy .board-iaima-thanks { color: var(--gold); letter-spacing: .08em; font-size: 12px; margin-top: 22px; }
+.board-iaima-links { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 24px; }
+.board-iaima-links a { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 4px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.board-iaima-links a:hover { color: var(--gold-bright); }
+.board-iaima-lang { display: flex; gap: 8px; margin: 0 0 22px; }
+.board-iaima-lang button { background: transparent; border: 1px solid var(--line); color: #888; padding: 5px 9px; font-size: 10px; letter-spacing: .12em; cursor: pointer; }
+.board-iaima-lang button.active { color: var(--gold); border-color: var(--gold); }
+.board-iaima-text { display: none; }
+.board-iaima-text.active { display: block; }
+@media(max-width:540px) { .board-iaima-poster { max-width: 230px; } .board-iaima-links { gap: 16px; } .works-categories a { font-size: 10px; letter-spacing: .14em; } }
+
+.board-item-iaima .board-tag { color: #9df27a; }

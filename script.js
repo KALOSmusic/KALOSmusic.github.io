@@ -7,6 +7,7 @@ const list = document.getElementById("works-list");
 
 const KALOS_WORK_URLS = {
   "interferences": { artist: null, album: "/works/interferences/", artistName: "KALOS", albumName: "Interferences" },
+  "grave-diggers-jamboree": { artist: null, album: "/works/fun/grave-diggers-jamboree/", artistName: "KALOS", albumName: "Grave-Diggers' Jamboree" },
   "morchia-1": { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
   "insatiable": { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
   "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" },
@@ -32,10 +33,11 @@ function renderWorks() {
     <nav class="works-categories" aria-label="Works categories">
       <a href="/works/" data-works-category="albums">ALBUMS</a>
       <a href="/works/singles/" data-works-category="singles">SINGLES</a>
+      <a href="/works/fun/" data-works-category="fun">FUN</a>
     </nav>
   `);
   list.innerHTML = KALOS_WORKS.map((work, wIndex) => `
-    <article class="work" data-work="${wIndex}" data-work-type="${work.type === "single" ? "single" : "album"}" data-work-slug="${work.slug}">
+    <article class="work" data-work="${wIndex}" data-work-type="${work.type === "single" ? "single" : "album"}" data-work-category="${work.category || (work.type === "single" ? "singles" : "albums")}" data-work-slug="${work.slug}">
       <button class="work-trigger" type="button" aria-expanded="false">
         <span>${work.title}</span>
         <span class="symbol">+</span>
@@ -88,6 +90,7 @@ function renderWorks() {
               </div>
 
               <div class="tab-content" data-content="audio">
+                ${work.youtubePlaylistId ? `<a class="single-youtube-link" href="https://www.youtube.com/playlist?list=${work.youtubePlaylistId}" target="_blank" rel="noopener noreferrer">Open playlist on YouTube ↗</a>` : ''}
                 <div class="yt-player">
                   <div class="yt-player-placeholder" data-player-placeholder>
                     <span>Choose a track to play</span>
@@ -153,7 +156,7 @@ function renderWorks() {
 }
 
 function selectWorksCategory(category) {
-  const chosen = category === "singles" ? "singles" : "albums";
+  const chosen = ["albums", "singles", "fun"].includes(category) ? category : "albums";
   list.dataset.category = chosen;
   document.querySelectorAll("[data-works-category]").forEach(link => {
     const active = link.dataset.worksCategory === chosen;
@@ -197,7 +200,7 @@ function attachWorkBehaviour() {
       if (isOpen) {
         stopPlayer(current);
         stopVideo(current);
-        const listUrl = current.dataset.workType === "single" ? "/works/singles/" : "/works/";
+        const listUrl = current.dataset.workCategory === "singles" ? "/works/singles/" : current.dataset.workCategory === "fun" ? "/works/fun/" : "/works/";
         if (window.location.pathname !== listUrl) history.pushState({}, "", listUrl);
         clearRoutePresentation();
       } else {
@@ -522,6 +525,7 @@ function injectStructuredData() {
     "works/lorna/insatiable": "insatiable",
     "works/tuesday": "tuesday",
     "works/interferences": "interferences",
+    "works/fun/grave-diggers-jamboree": "grave-diggers-jamboree",
     "works/singles/sugar-static": "sugar-static",
     "works/singles/i-dont-do-simple": "i-dont-do-simple",
     "works/singles/entropia": "entropia"
@@ -544,7 +548,7 @@ function injectStructuredData() {
       "genre": work.genre,
       ...(work.cover ? { "image": `https://kalosmusic.github.io/${work.cover}` } : {}),
       "url": `https://kalosmusic.github.io${info.album}`,
-      ...(work.youtubeVideoId ? { "sameAs": `https://www.youtube.com/watch?v=${work.youtubeVideoId}` } : {}),
+      ...(work.youtubeVideoId ? { "sameAs": `https://www.youtube.com/watch?v=${work.youtubeVideoId}` } : work.youtubePlaylistId ? { "sameAs": `https://www.youtube.com/playlist?list=${work.youtubePlaylistId}` } : {}),
       "publisher": { "@type": "Organization", "name": "KALOS", "url": "https://kalosmusic.github.io/" },
       ...(work.type === "single" ? { "lyrics": { "@type": "CreativeWork", "text": work.tracks[0].lyrics } } :
       { "track": work.tracks.map((track, i) => ({ "@type": "MusicRecording", "name": track.title, "position": i + 1 })) })
@@ -582,6 +586,8 @@ function initRoute() {
     "who-is-kalos": { view: "who" },
     "works": { view: "works", category: "albums" },
     "works/singles": { view: "works", category: "singles" },
+    "works/fun": { view: "works", category: "fun" },
+    "works/fun/grave-diggers-jamboree": { view: "works", workSlug: "grave-diggers-jamboree" },
     "contacts": { view: "contacts" },
     "works/lorna": { view: "works", workSlug: "insatiable", artistProfile: true },
     "works/lorna/insatiable": { view: "works", workSlug: "insatiable" },
@@ -606,7 +612,7 @@ function initRoute() {
 
   // Direct links to a single select SINGLES; album routes select ALBUMS.
   const selectedWork = route.workSlug && KALOS_WORKS.find(work => work.slug === route.workSlug);
-  selectWorksCategory(route.category || (selectedWork?.type === "single" ? "singles" : "albums"));
+  selectWorksCategory(route.category || selectedWork?.category || (selectedWork?.type === "single" ? "singles" : "albums"));
 
   if (route.workSlug) {
     list.classList.add("is-detail");
