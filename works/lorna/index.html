@@ -69,6 +69,7 @@
   ]
 }
   </script>
+<style>#who .lang-toggle[data-lang-toggle="who"]{display:flex;align-items:center;flex-wrap:wrap;gap:10px}#who .kalos-files-link{display:inline-block;margin-left:clamp(18px,6vw,85px);padding:12px 20px;background:#c49b4d;color:#111;font-size:13px;font-weight:800;letter-spacing:.12em;text-decoration:none;border:1px solid #e5c579;border-radius:3px}#who .kalos-files-link:hover,#who .kalos-files-link:focus-visible{background:#e5bd69;outline:2px solid #e5bd69;outline-offset:3px}@media(max-width:540px){#who .kalos-files-link{margin-left:18px;padding:11px 12px;font-size:11px}}</style>
 </head>
 <body data-route="works/lorna" data-view="home">
 <!-- HOME -->
@@ -84,21 +85,37 @@
 <a data-target="contacts" href="#contacts">Contacts</a>
 </nav>
 </header>
-<section aria-label="Updates" class="board view view-home">
-<h2 class="board-welcome">Welcome to KALOS world.</h2>
-<article class="board-item">
-      <span class="board-tag">THE KALOS FILES</span>
-      <div class="board-release">
-        <a class="board-files-poster" href="/the-kalos-files/" aria-label="Explore THE KALOS FILES photo gallery">
-          <img src="the-kalos-files/images/01.jpg" alt="THE KALOS FILES — KALOS wanted poster" loading="lazy">
-        </a>
-        <div class="board-info">
-          <p class="board-files-questions"><span>WHO IS KALOS?</span><span>WHAT ARE HIS CRIMES?</span><span>WHY IS HE STILL FREE?</span></p>
-          <a class="board-files-link" href="/the-kalos-files/">OPEN THE FILES ↗</a>
-        </div>
+<section class="board view view-home" aria-label="Updates">
+    <h2 class="board-welcome">Welcome to KALOS world.</h2>
+    <article class="board-item board-item-iaima">
+  <span class="board-tag">IAIMA · INVITED ARTIST</span>
+  <div class="board-release">
+    <a class="board-iaima-poster" href="https://italianaimusicawards.com/artists/kalos" target="_blank" rel="noopener noreferrer" aria-label="KALOS at the Italian AI Music Awards">
+      <img src="iaima-kalos-invited-artist.webp" alt="KALOS — IAIMA invited artist, Italian AI Music Awards" loading="lazy">
+    </a>
+    <div class="board-info board-iaima-copy">
+      <div class="board-iaima-lang" data-lang-toggle="iaima">
+        <button class="lang-btn active" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="it" type="button">IT</button>
       </div>
-    </article>
-</section>
+      <div class="board-iaima-text active" data-lang-group="iaima" data-page-lang="en">
+        <h3>KALOS at the Italian AI Music Awards</h3>
+        <p>The KALOS project has been invited to participate in the first <strong>ITALIAN AI MUSIC AWARDS</strong> as one of its <strong>“By Invitation” artists</strong>.</p>
+        <p>I will participate with <strong>“End Of Tuesday”</strong>, the opening track of my concept album <strong>“TUESDAY”</strong>.</p>
+        <p class="board-iaima-thanks"><strong>THANK YOU, IAIMA, FOR THIS OPPORTUNITY!</strong></p>
+        <div class="board-iaima-links"><a href="https://italianaimusicawards.com" target="_blank" rel="noopener noreferrer">Discover IAIMA ↗</a><a href="https://italianaimusicawards.com/artists/kalos" target="_blank" rel="noopener noreferrer">Read the interview ↗</a></div>
+      </div>
+      <div class="board-iaima-text" data-lang-group="iaima" data-page-lang="it">
+        <h3>KALOS agli Italian AI Music Awards</h3>
+        <p>Il progetto KALOS è stato invitato a partecipare al primo <strong>ITALIAN AI MUSIC AWARDS</strong> come uno degli artisti della categoria <strong>“By Invitation”</strong>.</p>
+        <p>Parteciperò con <strong>“End Of Tuesday”</strong>, il brano d'apertura del mio concept album <strong>“TUESDAY”</strong>.</p>
+        <p class="board-iaima-thanks"><strong>GRAZIE AD IAIMA PER L'OCCASIONE!</strong></p>
+        <div class="board-iaima-links"><a href="https://italianaimusicawards.com" target="_blank" rel="noopener noreferrer">Scopri IAIMA ↗</a><a href="https://italianaimusicawards.com/artists/kalos" target="_blank" rel="noopener noreferrer">Leggi l'intervista ↗</a></div>
+      </div>
+    </div>
+  </div>
+</article>
+  </section>
 <footer class="view view-home">
 <span>© 2026 KALOS</span>
 <a data-target="legal" href="#legal">Legal</a>
@@ -120,7 +137,8 @@
 <div class="lang-toggle" data-lang-toggle="who">
 <button class="lang-btn active" data-lang="en" type="button">EN</button>
 <button class="lang-btn" data-lang="it" type="button">IT</button>
-</div>
+<a class="kalos-files-link" href="/the-kalos-files/">THE KALOS FILES ↗</a>
+      </div>
 <div class="lang-block active" data-lang-group="who" data-page-lang="en">
 <div class="who-grid">
 <h1>An independent experimental music project — a space of research across music, narrative, visual identity and fictional artists.</h1>
