@@ -986,3 +986,7 @@ footer a:hover {
 @media(max-width:540px) { .board-iaima-poster { max-width: 230px; } .board-iaima-links { gap: 16px; } .works-categories a { font-size: 10px; letter-spacing: .14em; } }
 
 .board-item-iaima .board-tag { color: #9df27a; }
+
+
+/* KALOS shared THE KALOS FILES button styling */
+#who .lang-toggle[data-lang-toggle="who"]{display:flex;align-items:center;flex-wrap:wrap;gap:10px}#who .kalos-files-link{display:inline-block;margin-left:clamp(18px,6vw,85px);padding:12px 20px;background:#c49b4d;color:#111;font-size:13px;font-weight:800;letter-spacing:.12em;text-decoration:none;border:1px solid #e5c579;border-radius:3px}#who .kalos-files-link:hover,#who .kalos-files-link:focus-visible{background:#e5bd69;outline:2px solid #e5bd69;outline-offset:3px}@media(max-width:540px){#who .kalos-files-link{margin-left:18px;padding:11px 12px;font-size:11px}}

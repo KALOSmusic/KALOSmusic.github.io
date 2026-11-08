@@ -5,16 +5,19 @@
 
 const list = document.getElementById("works-list");
 
-const KALOS_WORK_URLS = {
-  "interferences": { artist: null, album: "/works/interferences/", artistName: "KALOS", albumName: "Interferences" },
-  "grave-diggers-jamboree": { artist: null, album: "/works/fun/grave-diggers-jamboree/", artistName: "KALOS", albumName: "Grave-Diggers' Jamboree" },
-  "morchia-1": { artist: "/works/morchia-quartet/", album: "/works/morchia-quartet/morchia-1/", artistName: "Morchia Quartet", albumName: "Morchia 1" },
-  "insatiable": { artist: "/works/lorna/", album: "/works/lorna/insatiable/", artistName: "Lorna", albumName: "Insatiable" },
-  "tuesday": { artist: null, album: "/works/tuesday/", artistName: "KALOS", albumName: "TUESDAY" },
-  "sugar-static": { artist: null, album: "/works/singles/sugar-static/", artistName: "KALOS", albumName: "Sugar Static" },
-  "i-dont-do-simple": { artist: null, album: "/works/singles/i-dont-do-simple/", artistName: "KALOS", albumName: "I Don't Do Simple" },
-  "entropia": { artist: null, album: "/works/singles/entropia/", artistName: "KALOS", albumName: "Entropia" }
-};
+const KALOS_WORK_URLS = Object.fromEntries(KALOS_WORKS.map(work => [
+  work.slug,
+  {
+    artist: work.artistPage?.url || null,
+    album: work.url,
+    artistName: work.artistPage?.name || "KALOS",
+    albumName: work.albumName || work.title
+  }
+]));
+
+function routeKey(url) {
+  return String(url || "").replace(/^\/+|\/+$/g, "");
+}
 
 function currentPath() {
   return window.location.pathname.replace(/^\/+|\/+$/g, "");
@@ -520,31 +523,18 @@ function initStaticLangToggles() {
 
 function injectStructuredData() {
   const path = currentPath();
-  const routeToWork = {
-    "works/morchia-quartet/morchia-1": "morchia-1",
-    "works/lorna/insatiable": "insatiable",
-    "works/tuesday": "tuesday",
-    "works/interferences": "interferences",
-    "works/fun/grave-diggers-jamboree": "grave-diggers-jamboree",
-    "works/singles/sugar-static": "sugar-static",
-    "works/singles/i-dont-do-simple": "i-dont-do-simple",
-    "works/singles/entropia": "entropia"
-  };
-  const artistRoutes = {
-    "works/morchia-quartet": { name: "Morchia Quartet", image: "morchia-gallery-6.jpg", genre: "Experimental / Noise / Post-Hardcore / Jazzcore", url: "/works/morchia-quartet/" },
-    "works/lorna": { name: "Lorna", image: "lorna-gallery-5.jpg", genre: "Funk / Rock / Afrobeat", url: "/works/lorna/" }
-  };
+  const routeWork = KALOS_WORKS.find(work => routeKey(work.url) === path);
+  const artistProfileWork = KALOS_WORKS.find(work => work.artistPage && routeKey(work.artistPage.url) === path);
 
   let data = null;
-  if (Object.prototype.hasOwnProperty.call(routeToWork, path)) {
-    const slug = routeToWork[path];
-    const work = KALOS_WORKS.find(item => item.slug === slug);
-    const info = KALOS_WORK_URLS[slug];
+  if (routeWork) {
+    const work = routeWork;
+    const info = KALOS_WORK_URLS[work.slug];
     data = {
       "@context": "https://schema.org",
       "@type": work.type === "single" ? "MusicRecording" : "MusicAlbum",
       "name": info.albumName,
-      "byArtist": { "@type": ((slug === "tuesday" || slug === "interferences") || work.type === "single") ? "Organization" : "MusicGroup", "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
+      "byArtist": { "@type": work.artistSchemaType || (work.artistPage ? "MusicGroup" : "Organization"), "name": info.artistName, ...(info.artist ? { "url": `https://kalosmusic.github.io${info.artist}` } : {}) },
       "genre": work.genre,
       ...(work.cover ? { "image": `https://kalosmusic.github.io/${work.cover}` } : {}),
       "url": `https://kalosmusic.github.io${info.album}`,
@@ -553,15 +543,15 @@ function injectStructuredData() {
       ...(work.type === "single" ? { "lyrics": { "@type": "CreativeWork", "text": work.tracks[0].lyrics } } :
       { "track": work.tracks.map((track, i) => ({ "@type": "MusicRecording", "name": track.title, "position": i + 1 })) })
     };
-  } else if (artistRoutes[path]) {
-    const a = artistRoutes[path];
+  } else if (artistProfileWork) {
+    const artist = artistProfileWork.artistPage;
     data = {
       "@context": "https://schema.org",
       "@type": "MusicGroup",
-      "name": a.name,
-      "genre": a.genre,
-      "image": `https://kalosmusic.github.io/${a.image}`,
-      "url": `https://kalosmusic.github.io${a.url}`,
+      "name": artist.name,
+      "genre": artist.genre,
+      "image": `https://kalosmusic.github.io/${artist.image}`,
+      "url": `https://kalosmusic.github.io${artist.url}`,
       "memberOf": { "@type": "Organization", "name": "KALOS", "url": "https://kalosmusic.github.io/" }
     };
   }
@@ -587,19 +577,11 @@ function initRoute() {
     "works": { view: "works", category: "albums" },
     "works/singles": { view: "works", category: "singles" },
     "works/fun": { view: "works", category: "fun" },
-    "works/fun/grave-diggers-jamboree": { view: "works", workSlug: "grave-diggers-jamboree" },
-    "contacts": { view: "contacts" },
-    "works/lorna": { view: "works", workSlug: "insatiable", artistProfile: true },
-    "works/lorna/insatiable": { view: "works", workSlug: "insatiable" },
-    "works/tuesday": { view: "works", workSlug: "tuesday" },
-    "works/interferences": { view: "works", workSlug: "interferences" },
-    "works/morchia-quartet": { view: "works", workSlug: "morchia-1", artistProfile: true },
-    "works/morchia-quartet/morchia-1": { view: "works", workSlug: "morchia-1" },
-    "works/singles/sugar-static": { view: "works", workSlug: "sugar-static" },
-    "works/singles/i-dont-do-simple": { view: "works", workSlug: "i-dont-do-simple" },
-    "works/singles/entropia": { view: "works", workSlug: "entropia" }
+    "contacts": { view: "contacts" }
   };
-  const route = (window.location.hash === "#legal") ? { view: "legal" } : (routeMap[path] || { view: "home" });
+  const directWork = KALOS_WORKS.find(work => routeKey(work.url) === path);
+  const artistWork = KALOS_WORKS.find(work => work.artistPage && routeKey(work.artistPage.url) === path);
+  const route = (window.location.hash === "#legal") ? { view: "legal" } : (routeMap[path] || (directWork ? { view: "works", workSlug: directWork.slug } : artistWork ? { view: "works", workSlug: artistWork.slug, artistProfile: true } : { view: "home" }));
   setView(route.view);
 
   document.querySelectorAll(".work").forEach(el => {

@@ -1,70 +1,13 @@
-/* ============================================================
-   ARCHIVIO ALBUM KALOS
-   ============================================================
-
-   COME AGGIUNGERE UN NUOVO ALBUM
-   --------------------------------
-   1. Copia un intero blocco { ... } tra gli elementi di
-      KALOS_ALBUMS, prima del suo "];" e del blocco KALOS_SINGLES.
-      Non aggiungere album dentro KALOS_SINGLES.
-   2. Cambia i valori con quelli del nuovo album.
-   3. Carica le immagini (copertina e galleria) nella STESSA
-      cartella dove si trovano già index.html e gli altri file
-      (la radice del repository — non esiste una sottocartella
-      "assets") e scrivi qui i loro nomi esatti.
-   4. Salva, carica questo file su GitHub sovrascrivendo quello
-      vecchio.
-
-   L'album che metti PIÙ IN ALTO in KALOS_ALBUMS sarà il
-   PRIMO a comparire nella sezione ALBUMS di "Works".
-   I singoli sono aggiunti separatamente in KALOS_SINGLES.
-
-   CAMPI DI OGNI ALBUM
-   --------------------------------
-   slug     → Identificatore tecnico stabile dell'album. Deve essere
-              unico e non va cambiato quando riordini gli album, es.
-              "insatiable", "tuesday", "morchia-1".
-   title    → Nome dell'album. Ricordati le virgolette attorno al
-              titolo, es. "Lorna — \"Insatiable\"" oppure "\"TUESDAY\""
-              (se l'album non ha un nome artista a parte).
-   genre    → Genere musicale, es. "Funk / Rock / Afrobeat".
-              Se l'album è strumentale (senza testi), scrivi
-              "Instrumental" come primo elemento, es.
-              "Instrumental / Noise / Post-Hardcore".
-   cover    → Nome del file immagine di copertina (usato anche
-              nell'elenco Works), es. "lorna-insatiable.jpg"
-   instrumental → Scrivi "true" (senza virgolette) SOLO se l'album
-              non ha testi da mostrare: in quel caso il pulsante
-              "Lyrics" accanto a ogni brano non comparirà affatto.
-              Per un album con testi, ometti del tutto questa riga
-              (non serve scrivere "false").
-   concept  → Il testo del Concept, in due lingue:
-              concept.en → versione inglese
-              concept.it → versione italiana
-              Un pulsante EN/IT sul sito farà passare dall'una
-              all'altra. Ogni paragrafo va tra <p> e </p>.
-              Per il corsivo usa <em>parola</em>, per il
-              grassetto <strong>parola</strong>.
-   images   → Elenco delle immagini della galleria del Concept
-              (scorrono una alla volta, con swipe). Nomi dei
-              file, nello stesso ordine in cui vuoi che compaiano.
-   youtubePlaylistId → Solo il codice della playlist YouTube,
-              si trova nel link dopo "list=".
-   tracks   → Elenco delle tracce, NELL'ORDINE REALE della
-              playlist YouTube. Ogni traccia è un oggetto con:
-              title  → nome della canzone
-              lyrics → testo completo della canzone. Lascia ""
-                       se non lo hai ancora (o ometti il campo del
-                       tutto per un album "instrumental: true").
-                       Per andare a capo, usa \n. Il testo compare
-                       con un pulsante "Lyrics" accanto al brano,
-                       dentro la stessa pagina Audio (non
-                       interrompe la riproduzione).
-   ============================================================ */
+/* KALOS WORK CATALOGUE
+   Content and route metadata live together in this file.
+   For adding or editing releases, follow the single authoritative guide in README.md.
+*/
 
 const KALOS_ALBUMS = [
   {
     slug: "interferences",
+    url: "/works/interferences/",
+    albumName: "Interferences",
     title: '"Interferences"',
     genre: "Experimental Electronic / Electroacoustic / Noise / Glitch",
     cover: "interferences-cover.webp",
@@ -140,6 +83,14 @@ const KALOS_ALBUMS = [
   },
   {
     slug: "morchia-1",
+    url: "/works/morchia-quartet/morchia-1/",
+    albumName: "Morchia 1",
+    artistPage: {
+          "url": "/works/morchia-quartet/",
+          "name": "Morchia Quartet",
+          "image": "morchia-gallery-6.jpg",
+          "genre": "Experimental / Noise / Post-Hardcore / Jazzcore"
+    },
     title: "Morchia Quartet — \"Morchia 1\"",
     genre: "Instrumental / Noise / Post-Hardcore / Jazzcore",
     cover: "morchia-1-cover.jpg",
@@ -226,6 +177,14 @@ const KALOS_ALBUMS = [
   },
   {
     slug: "insatiable",
+    url: "/works/lorna/insatiable/",
+    albumName: "Insatiable",
+    artistPage: {
+          "url": "/works/lorna/",
+          "name": "Lorna",
+          "image": "lorna-gallery-5.jpg",
+          "genre": "Funk / Rock / Afrobeat"
+    },
     title: "Lorna — \"Insatiable\"",
     genre: "Funk / Rock / Afrobeat",
     cover: "lorna-insatiable.jpg",
@@ -308,6 +267,8 @@ const KALOS_ALBUMS = [
 
   {
     slug: "tuesday",
+    url: "/works/tuesday/",
+    albumName: "TUESDAY",
     title: "\"TUESDAY\"",
     genre: "Avant-garde / Experimental Metal — Theatrical, Grotesque",
     cover: "tuesday-cover.jpg",
@@ -398,6 +359,9 @@ const KALOS_ALBUMS = [
 const KALOS_FUN = [
   {
     slug: "grave-diggers-jamboree",
+    url: "/works/fun/grave-diggers-jamboree/",
+    albumName: "Grave-Diggers' Jamboree",
+    artistSchemaType: "MusicGroup",
     category: "fun",
     title: "Grave-Diggers' Jamboree",
     genre: "Psychobilly / Halloween",
@@ -434,6 +398,8 @@ const KALOS_SINGLES = [
   {
     type: "single",
     slug: "sugar-static",
+    url: "/works/singles/sugar-static/",
+    albumName: "Sugar Static",
     title: "Sugar Static",
     cover: "works/singles/sugar-static.webp",
     genre: "Grunge / Noise Rock / Riot Grrrl",
@@ -447,6 +413,8 @@ const KALOS_SINGLES = [
   {
     type: "single",
     slug: "i-dont-do-simple",
+    url: "/works/singles/i-dont-do-simple/",
+    albumName: "I Don't Do Simple",
     title: "I Don't Do Simple",
     genre: "Experimental Rock / Alternative Rock / Art Rock",
     cover: "works/singles/i-dont-do-simple.webp",
@@ -460,6 +428,8 @@ const KALOS_SINGLES = [
   {
     type: "single",
     slug: "entropia",
+    url: "/works/singles/entropia/",
+    albumName: "Entropia",
     title: "Entropia",
     genre: "Noise / Electroacoustic / Experimental Industrial",
     cover: "works/singles/entropia.webp",
